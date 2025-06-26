@@ -36,8 +36,8 @@ struct listView: View {
             
             ScrollView {
                 VStack(alignment: .trailing, spacing: 10) {
-                    MakananItemView(imageName: "ayambetutu", title: "AyfffffffffffffffffffffffBetutu", calories: "20 kkal")
-                    MakananItemView(imageName: "sayurasem", title: "Sayurrrrrrrrrrdddddd Asem", calories: "20 kkal")
+                    MakananItemView(imageName: "ayambetutu", title: "Ayam Betutu", calories: "20 kkal")
+                    MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
                     MakananItemView(imageName: "jahirgoreng", title: "Ikan Jahir Goreng", calories: "20 kkal")
                     MakananItemView(imageName: "nasi", title: "Nasi Putih", calories: "20 kkal")
                     MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
