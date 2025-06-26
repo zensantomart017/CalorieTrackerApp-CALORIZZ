@@ -83,12 +83,12 @@ struct KategoriView: View {
                 .foregroundColor(.black)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
-                    KategoriItem(title: "Nasi", imageName: "foodImage", backgroundColor: .customOrange)
-                    KategoriItem(title: "Ayam", imageName: "foodImage", backgroundColor: .customYellow)
-                    KategoriItem(title: "Ikan", imageName: "foodImage", backgroundColor: .customGreen)
-                    KategoriItem(title: "Daging", imageName: "foodImage", backgroundColor: .customOrange)
-                    KategoriItem(title: "Sayur", imageName: "foodImage", backgroundColor: .customYellow)
-                    KategoriItem(title: "Buah", imageName: "foodImage", backgroundColor: .customGreen)
+                    KategoriItem(title: "Nasi", imageName: "nasi", backgroundColor: .customOrange)
+                    KategoriItem(title: "Ayam", imageName: "ayambetutu", backgroundColor: .customYellow)
+                    KategoriItem(title: "Ikan", imageName: "jahirgoreng", backgroundColor: .customGreen)
+                    KategoriItem(title: "Daging", imageName: "ayambetutu", backgroundColor: .customOrange)
+                    KategoriItem(title: "Sayur", imageName: "sayurasem", backgroundColor: .customYellow)
+                    KategoriItem(title: "Buah", imageName: "tahugoreng", backgroundColor: .customGreen)
                 }
                 .padding(.vertical, 4)
             }
@@ -114,9 +114,6 @@ struct CategoryView: View {
                             .font(.title.bold())
                             .foregroundColor(.orange)
                         Spacer()
-                        Image(systemName: "person.circle.fill")
-                            .font(.title)
-                            .foregroundStyle(.black)
                     }
                     .padding(.horizontal)
                     .padding(.top, 40)
@@ -160,9 +157,9 @@ struct CategoryView: View {
                                 KategoriView()
                                 
                                 VStack(spacing: 12) {
-                                    foodCardView(food: FoodItem(imageName: "c", name: "Nasi Kuning Komplit", calories: 550))
-                                    foodCardView(food: FoodItem(imageName: "sate_ayam", name: "Sate Ayam", calories: 300))
-                                    foodCardView(food: FoodItem(imageName: "gado_gado", name: "Gado-Gado", calories: 400))
+                                    foodCardView(food: FoodItem(imageName: "nasi", name: "Nasi Kuning Komplit", calories: 550))
+                                    foodCardView(food: FoodItem(imageName: "ayambetutu", name: "Sate Ayam", calories: 300))
+                                    foodCardView(food: FoodItem(imageName: "sayurasem", name: "Gado-Gado", calories: 400))
                                 }
                                 .padding(.top)
                                 Spacer(minLength: 80)
