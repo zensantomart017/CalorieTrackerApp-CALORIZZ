@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+//firman ganteng
 
 // MARK: - FoodItem and FoodCard
 struct FoodItem: Identifiable {
