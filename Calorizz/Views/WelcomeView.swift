@@ -15,10 +15,18 @@ struct WelcomeView: View {
     var body: some View {
         NavigationStack {
             VStack (spacing: 20) {
-                Circle()
-                    .frame(width: 200, height: 200)
-                    .foregroundStyle(.green)
-                    .padding()
+                ZStack {
+                    Circle()
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(width: 160, height: 160)
+                    
+                    Image("logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 160, height: 170)
+                        .foregroundColor(.gray)
+                }
+                .padding(.top, 80)
                 
                 if isReturningUser {
                     Text("Welcome back, \(name)!")
@@ -26,11 +34,8 @@ struct WelcomeView: View {
                         .bold()
                         .padding(.bottom)
                 } else {
-                    Label {
                         Text("Username")
-                    } icon: {
-                        Image(systemName: "person")
-                    }
+                        .font(.headline)
                     
                     TextField("Your username", text: $name)
                         .textFieldStyle(RoundedBorderTextFieldStyle()).padding()
@@ -40,11 +45,12 @@ struct WelcomeView: View {
                             navigate = true
                         }
                     } label: {
-                        Label("Next", systemImage: "arrow.right")
-                            .padding(.vertical, 20)
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(.white)
-                            .background(.blue)
+                        Text("Next")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: 100)
+                            .padding()
+                            .background(Color.orange)
+                            .foregroundColor(.white)
                             .cornerRadius(10)
                     }
                     .font(.headline)
