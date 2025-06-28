@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-//firman ganteng
 
 struct FoodItem: Identifiable {
     let id = UUID()
@@ -27,6 +26,8 @@ func foodCardView(food: FoodItem) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(food.name)
                 .font(.headline)
+                .foregroundStyle(.primary)
+            
             Text("\(food.calories) Kkal")
                 .font(.subheadline)
                 .foregroundColor(.shadedGreen)
@@ -44,7 +45,7 @@ func foodCardView(food: FoodItem) -> some View {
         .buttonStyle(PlainButtonStyle())
     }
     .padding()
-    .background(Color.white)
+    .background(Color(.systemBackground))
     .cornerRadius(15)
     .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
     .padding(.horizontal)
@@ -102,6 +103,7 @@ struct CategoryView: View {
     @State private var searchBar: String = ""
     @State private var showCamera = false
     @State private var image: UIImage?
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationStack {
@@ -148,7 +150,7 @@ struct CategoryView: View {
                             }
                         }
                         .sheet(isPresented: $showCamera) {
-                            ImagePicker(selectedImage: $image).padding()
+                            ImagePicker(selectedImage: $image)
                         }
                         .padding(.horizontal)
                         
@@ -168,33 +170,31 @@ struct CategoryView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, 20)
-                    .background(.white)
+                    .background(Color(.systemBackground))
                     .cornerRadius(30, corners: [.topLeft, .topRight])
-                    .shadow(radius: 5)
+                    .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(1), radius: 5, x: 0, y: 4)
                 }
                 
                 HStack {
                     Text("5 Item")
                         .font(.body)
                     Spacer()
-                    //                Button(action: {}) {
                     NavigationLink(destination: listView()) {
                         
                         Text("Calculate")
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundColor(Color(.systemBackground))
                             .padding(.horizontal, 16)
                             .padding(.vertical, 10)
                             .background(.shadedGreen)
                             .cornerRadius(10)
                     }
                 }
-                //                }
                 .frame(maxWidth: .infinity)
                 .padding(.top, 12)
                 .padding(.bottom, 30)
                 .padding(.horizontal)
-                .background(.white)
+                .background(Color(.systemBackground))
                 .ignoresSafeArea(edges: .bottom)
             }
             .navigationBarBackButtonHidden(true)

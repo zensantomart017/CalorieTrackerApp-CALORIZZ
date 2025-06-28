@@ -14,13 +14,7 @@ struct foodItem: Identifiable {
     let calories: Int
 }
 
-struct FoodCategory: Identifiable {
-    let id = UUID()
-    let imageName: String
-    let category: String
-}
-
-func FoodCardView(food: FoodItem) -> some View {
+func foodCardView(food: foodItem) -> some View {
     HStack(alignment: .center, spacing: 16) {
         Image(food.imageName)
             .resizable()
@@ -32,6 +26,7 @@ func FoodCardView(food: FoodItem) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(food.name)
                 .font(.headline)
+                .foregroundStyle(.primary)
             
             Text("\(food.calories) Kkal")
                 .font(.subheadline)
@@ -43,7 +38,6 @@ func FoodCardView(food: FoodItem) -> some View {
         
         Button {
             print("Add \(food.name) tapped!")
-            
         } label: {
             Image(systemName: "plus.circle.fill")
                 .font(.title)
@@ -52,30 +46,10 @@ func FoodCardView(food: FoodItem) -> some View {
         .buttonStyle(PlainButtonStyle())
     }
     .padding()
-    .background(Color.white)
+    .background(Color(.systemBackground))
     .cornerRadius(15)
     .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
     .padding(.horizontal)
-}
-
-func categoryCardView(food: FoodCategory) -> some View {
-    VStack(spacing: 8) {
-        // Food Image
-        Image(food.imageName)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 50, height: 50)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius: 5)
-        
-        Text(food.category)
-            .font(.headline)
-        
-    }
-    .padding()
-    .background(Color.white)
-    .cornerRadius(15)
-    .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
 }
 
 struct SearchView: View {
@@ -86,58 +60,46 @@ struct SearchView: View {
     
     var body: some View {
         NavigationStack {
-            
-            
             ZStack(alignment: .bottom) {
                 Color(.systemBackground).ignoresSafeArea()
                 
                 VStack (spacing: 0) {
-                    //
-                    
                     VStack(spacing: 20) {
                         HStack(spacing: 12) {
                             HStack {
-                                NavigationLink{
-                                    CategoryView()
-                                }label: {
+                                NavigationLink(destination: CategoryView()){
                                     Image(systemName: "arrow.backward")
-                                    
+                                        .foregroundStyle(.primary)
                                 }
+                                
                                 TextField("Search", text: $searchBar)
                                     .foregroundColor(.gray)
+                                
                                 Spacer()
+                                
                             }
                             .padding(.horizontal)
                             .frame(height: 50)
-                            .background(Color(.systemGray6))
+                            .background(Color(UIColor.secondarySystemBackground))
                             .cornerRadius(20)
-                            
-                            
-                            
                         }
-                                            .sheet(isPresented: $showCamera) {
-                                                ImagePicker(selectedImage: $image).padding()
-                                            }
+                        .sheet(isPresented: $showCamera) {
+                            ImagePicker(selectedImage: $image).padding()
+                        }
                         .padding(.horizontal)
                         
                         ScrollView(showsIndicators: false) {
                             VStack(alignment: .leading, spacing: 16){
-                                //
-                                
-                                ////
-                                
                                 VStack(spacing: 12) {
-                                    foodCardView(food: FoodItem(imageName: "c", name: "Nasi Kuning Komplit", calories: 550))
+                                    foodCardView(food: foodItem(imageName: "c", name: "Nasi Kuning Komplit", calories: 550))
                                     
-                                    foodCardView(food: FoodItem(imageName: "sate_ayam", name: "Sate Ayam", calories: 300))
+                                    foodCardView(food: foodItem(imageName: "sate_ayam", name: "Sate Ayam", calories: 300))
                                     
-                                    foodCardView(food: FoodItem(imageName: "gado_gado", name: "Gado-Gado", calories: 400))
+                                    foodCardView(food: foodItem(imageName: "gado_gado", name: "Gado-Gado", calories: 400))
                                     
-                                    foodCardView(food: FoodItem(imageName: "gado_gado", name: "Gado-Gado", calories: 400))
+                                    foodCardView(food: foodItem(imageName: "gado_gado", name: "Gado-Gado", calories: 400))
                                     
-                                    foodCardView(food: FoodItem(imageName: "gado_gado", name: "Gado-Gado", calories: 400))
-                                    
-                                    
+                                    foodCardView(food: foodItem(imageName: "gado_gado", name: "Gado-Gado", calories: 400))
                                 }
                                 .padding(.top)
                                 Spacer(minLength: 80)
@@ -146,8 +108,7 @@ struct SearchView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, 20)
-                    .background(.white)
-//                    .cornerRadius(30, corners: [.topLeft, .topRight])
+                    .background(Color(.systemBackground))
                     .shadow(radius: 5)
                 }
             }

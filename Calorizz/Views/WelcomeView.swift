@@ -14,57 +14,62 @@ struct WelcomeView: View {
     
     var body: some View {
         NavigationStack {
-            VStack (spacing: 20) {
-                ZStack {
-                    Circle()
-                        .fill(Color.gray.opacity(0.2))
-                        .frame(width: 160, height: 160)
-                    
-                    Image("logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 160, height: 170)
-                        .foregroundColor(.gray)
-                }
-                .padding(.top, 80)
+            ZStack {
+                LinearGradient(colors: [.orange, .yellow], startPoint: .topLeading, endPoint: .bottomLeading)
+                    .ignoresSafeArea()
                 
-                if isReturningUser {
-                    Text("Welcome back, \(name)!")
-                        .font(.title)
-                        .bold()
-                        .padding(.bottom)
-                } else {
+                VStack (spacing: 20) {
+                    ZStack {
+                        Circle()
+                            .fill(Color.gray.opacity(0.2))
+                            .frame(width: 160, height: 160)
+                        
+                        Image("logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 160, height: 170)
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.top, 80)
+                    
+                    if isReturningUser {
+                        Text("Welcome back, \(name)!")
+                            .font(.title)
+                            .bold()
+                            .padding(.bottom)
+                    } else {
                         Text("Username")
+                            .font(.headline)
+                        
+                        TextField("Your username", text: $name)
+                            .textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                        
+                        Button {
+                            if !name.isEmpty {
+                                navigate = true
+                            }
+                        } label: {
+                            Text("Next")
+                                .fontWeight(.semibold)
+                                .frame(maxWidth: 100)
+                                .padding()
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        }
                         .font(.headline)
+                        .disabled(name.isEmpty)
+                    }
                     
-                    TextField("Your username", text: $name)
-                        .textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                    
-                    Button {
-                        if !name.isEmpty {
+                    NavigationLink("", destination: CategoryView(), isActive: $navigate).hidden()
+                }
+                .padding()
+                .onAppear() {
+                    if !name.isEmpty {
+                        isReturningUser = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             navigate = true
                         }
-                    } label: {
-                        Text("Next")
-                            .fontWeight(.semibold)
-                            .frame(maxWidth: 100)
-                            .padding()
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    .font(.headline)
-                    .disabled(name.isEmpty)
-                }
-                
-                NavigationLink("", destination: CategoryView(), isActive: $navigate).hidden()
-            }
-            .padding()
-            .onAppear() {
-                if !name.isEmpty {
-                    isReturningUser = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        navigate = true
                     }
                 }
             }

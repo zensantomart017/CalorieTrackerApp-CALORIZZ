@@ -10,61 +10,55 @@ import SwiftUI
 struct listView: View {
     var body: some View {
         NavigationStack{
-        VStack{
-            HStack(spacing: 16) {
-                NavigationLink(destination: CategoryView()) {
-                    Label(" ", systemImage: "chevron.left")
-                        .foregroundStyle(.black)
-                }
-                
-                Spacer()
-                
-                Button{
-                }label:{
-                    Label("", systemImage: "plus")
-                        .foregroundStyle(.shadedGreen)
-                        .font(.system(size: 25))
-
+            VStack{
+                HStack(spacing: 16) {
+                    NavigationLink(destination: CategoryView()) {
+                        Label("", systemImage: "chevron.left")
+                            .foregroundStyle(.primary)
+                    }
                     
-                }
-                .font(.headline)
-                .foregroundColor(.black)
-                .padding(.horizontal)
-                
-            }
-            .padding(10)
-            
-            ScrollView {
-                VStack(alignment: .trailing, spacing: 10) {
-                    MakananItemView(imageName: "ayambetutu", title: "Ayam Betutu", calories: "20 kkal")
-                    MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
-                    MakananItemView(imageName: "jahirgoreng", title: "Ikan Jahir Goreng", calories: "20 kkal")
-                    MakananItemView(imageName: "nasi", title: "Nasi Putih", calories: "20 kkal")
-                    MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
-                    MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
-                }
-                .background(.white)
-            }
-            
-            HStack(){
-                Text("Total : ")
+                    Spacer()
+                    
+                    Button{
+                    }label:{
+                        Label("", systemImage: "plus")
+                            .foregroundStyle(.shadedGreen)
+                            .font(.system(size: 25))
+                    }
                     .font(.headline)
-                
-                Spacer()
-                
-            
-                Text("kkal")
-                    .font(.headline)
-                    .foregroundColor(.black)
                     .padding(.horizontal)
+                }
+                .padding(10)
+                
+                ScrollView {
+                    VStack(alignment: .trailing, spacing: 10) {
+                        MakananItemView(imageName: "ayambetutu", title: "Ayam Betutu", calories: "20 kkal")
+                        MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
+                        MakananItemView(imageName: "jahirgoreng", title: "Ikan Jahir Goreng", calories: "20 kkal")
+                        MakananItemView(imageName: "nasi", title: "Nasi Putih", calories: "20 kkal")
+                        MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
+                        MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
+                    }
+                }
+                
+                HStack(){
+                    Text("Total : ")
+                        .font(.headline)
+                    
+                    Spacer()
+                    
+                    Text("kkal")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                        .padding(.horizontal)
+                }
+                .padding()
             }
-            .padding()
+            .background(Color(.systemBackground))
+            .navigationBarBackButtonHidden(true)
         }
-        .navigationBarBackButtonHidden(true)
-        .padding()
     }
-}
-
+    
     struct MakananItemView: View {
         let imageName: String
         let title: String
@@ -83,10 +77,11 @@ struct listView: View {
                 VStack(alignment: .leading) {
                     Text(title)
                         .font(.headline)
+                        .foregroundStyle(.primary)
                         .lineLimit(2)
                         .minimumScaleFactor(0.8)
                         .layoutPriority(1)
-
+                    
                     
                     Text(calories)
                         .foregroundStyle(.shadedGreen)
@@ -117,7 +112,7 @@ struct listView: View {
                 .frame(width: 90)
             }
             .padding()
-            .background(Color.white)
+            .background(Color(.systemBackground))
             .cornerRadius(15)
             .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
             .padding(.horizontal)
