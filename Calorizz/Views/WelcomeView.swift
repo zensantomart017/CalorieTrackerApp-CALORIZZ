@@ -15,14 +15,11 @@ struct WelcomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(colors: [.orange, .yellow], startPoint: .topLeading, endPoint: .bottomLeading)
+                LinearGradient(colors: [.shadedOrange,.customOrange, .customYellow], startPoint: .topLeading, endPoint: .bottomLeading)
                     .ignoresSafeArea()
                 
                 VStack (spacing: 20) {
                     ZStack {
-                        Circle()
-                            .fill(Color.gray.opacity(0.2))
-                            .frame(width: 160, height: 160)
                         
                         Image("logo")
                             .resizable()
@@ -38,11 +35,28 @@ struct WelcomeView: View {
                             .bold()
                             .padding(.bottom)
                     } else {
-                        Text("Username")
-                            .font(.headline)
+                        Text("Calorizz")
+                            .font(.title)
+                            .italic(true)
+                            .bold(true)
+                            .foregroundStyle(.shadedGreen)
                         
                         TextField("Your username", text: $name)
-                            .textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                    .fill(Color.white.opacity(0.30))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                    .stroke(Color.white.opacity(0.4), lineWidth: 1)
+                            )
+                            .font(.system(size: 17, weight: .medium))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 32)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 3)
+
                         
                         Button {
                             if !name.isEmpty {
@@ -64,14 +78,14 @@ struct WelcomeView: View {
                     NavigationLink("", destination: CategoryView(), isActive: $navigate).hidden()
                 }
                 .padding()
-                .onAppear() {
-                    if !name.isEmpty {
-                        isReturningUser = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            navigate = true
-                        }
-                    }
-                }
+//                .onAppear() {
+//                    if !name.isEmpty {
+//                        isReturningUser = true
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                            navigate = true
+//                        }
+//                    }
+//                }
             }
         }
     }

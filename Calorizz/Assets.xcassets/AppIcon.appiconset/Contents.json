@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Calorizz_1024x1024 1.png",
+      "filename" : "calorizz_logo_gradient_1024x1024_hd 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Calorizz_1024x1024 2.png",
+      "filename" : "calorizz_logo_gradient_1024x1024_hd 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "Calorizz_1024x1024.png",
+      "filename" : "calorizz_logo_gradient_1024x1024_hd.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
