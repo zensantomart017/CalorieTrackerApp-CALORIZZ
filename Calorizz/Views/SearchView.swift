@@ -7,16 +7,9 @@
 
 import SwiftUI
 
-struct foodItem: Identifiable {
-    let id = UUID()
-    let imageName: String
-    let name: String
-    let calories: Int
-}
-
-func foodCardView(food: foodItem) -> some View {
+func foodCardView(food: FoodItem) -> some View {
     HStack(alignment: .center, spacing: 16) {
-        Image(food.imageName)
+        Image("photo")
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 50, height: 50)
@@ -31,7 +24,6 @@ func foodCardView(food: foodItem) -> some View {
             Text("\(food.calories) Kkal")
                 .font(.subheadline)
                 .foregroundColor(.green)
-            
         }
         
         Spacer()
@@ -53,10 +45,12 @@ func foodCardView(food: foodItem) -> some View {
 }
 
 struct SearchView: View {
+    @StateObject private var viewModel = FoodViewModel()
     @AppStorage("username") private var name = ""
     @State private var searchBar: String = ""
     @State private var showCamera = false
     @State private var image: UIImage?
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationStack {
@@ -72,10 +66,20 @@ struct SearchView: View {
                                         .foregroundStyle(.primary)
                                 }
                                 
-                                TextField("Search", text: $searchBar)
-                                    .foregroundColor(.gray)
-                                
-                                Spacer()
+                                HStack {
+                                    TextField("Search", text: $searchBar)
+                                        .foregroundColor(.gray)
+                                    
+                                    Button {
+                                        if !searchBar.isEmpty {
+                                            viewModel.fetchFoods(for: searchBar)
+                                        }
+                                    } label: {
+                                        Image(systemName: "magnifyingglass")
+                                            .font(.title2)
+                                    }
+                                }
+                                .padding()
                                 
                             }
                             .padding(.horizontal)
@@ -90,21 +94,14 @@ struct SearchView: View {
                         
                         ScrollView(showsIndicators: false) {
                             VStack(alignment: .leading, spacing: 16){
-                                VStack(spacing: 12) {
-                                    foodCardView(food: foodItem(imageName: "c", name: "Nasi Kuning Komplit", calories: 550))
-                                    
-                                    foodCardView(food: foodItem(imageName: "sate_ayam", name: "Sate Ayam", calories: 300))
-                                    
-                                    foodCardView(food: foodItem(imageName: "gado_gado", name: "Gado-Gado", calories: 400))
-                                    
-                                    foodCardView(food: foodItem(imageName: "gado_gado", name: "Gado-Gado", calories: 400))
-                                    
-                                    foodCardView(food: foodItem(imageName: "gado_gado", name: "Gado-Gado", calories: 400))
+                                ForEach(viewModel.items) { food in
+                                    foodCardView(food: food)
                                 }
-                                .padding(.top)
-                                Spacer(minLength: 80)
                             }
+                            .padding(.top)
+                            .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.5), radius: 2, x: 0, y: 1)
                         }
+                        Spacer(minLength: 80)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, 20)

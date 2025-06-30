@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct FoodItem: Identifiable {
+struct foodItem: Identifiable {
     let id = UUID()
     let imageName: String
     let name: String
     let calories: Int
 }
 
-func foodCardView(food: FoodItem) -> some View {
+func foodCardView(food: foodItem) -> some View {
     HStack(spacing: 16) {
         Image(food.imageName)
             .resizable()
@@ -159,9 +159,9 @@ struct CategoryView: View {
                                 KategoriView()
                                 
                                 VStack(spacing: 12) {
-                                    foodCardView(food: FoodItem(imageName: "nasi", name: "Nasi Kuning Komplit", calories: 550))
-                                    foodCardView(food: FoodItem(imageName: "ayambetutu", name: "Sate Ayam", calories: 300))
-                                    foodCardView(food: FoodItem(imageName: "sayurasem", name: "Gado-Gado", calories: 400))
+                                    foodCardView(food: foodItem(imageName: "nasi", name: "Nasi Kuning Komplit", calories: 550))
+                                    foodCardView(food: foodItem(imageName: "ayambetutu", name: "Sate Ayam", calories: 300))
+                                    foodCardView(food: foodItem(imageName: "sayurasem", name: "Gado-Gado", calories: 400))
                                 }
                                 .padding(.top)
                                 Spacer(minLength: 80)
