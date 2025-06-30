@@ -53,7 +53,7 @@ struct WelcomeView: View {
                                     .stroke(Color.white.opacity(0.4), lineWidth: 1)
                             )
                             .font(.system(size: 17, weight: .medium))
-                            .foregroundColor(.white)
+                            .foregroundColor(.black)
                             .padding(.horizontal, 32)
                             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 3)
 
