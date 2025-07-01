@@ -87,7 +87,7 @@ struct KategoriView: View {
                     KategoriItem(title: "Nasi", imageName: "nasi", backgroundColor: .customOrange)
                     KategoriItem(title: "Ayam", imageName: "ayambetutu", backgroundColor: .customYellow)
                     KategoriItem(title: "Ikan", imageName: "jahirgoreng", backgroundColor: .customGreen)
-                    KategoriItem(title: "Daging", imageName: "ayambetutu", backgroundColor: .customOrange)
+                    KategoriItem(title: "Daging", imageName: "daging", backgroundColor: .customOrange)
                     KategoriItem(title: "Sayur", imageName: "sayurasem", backgroundColor: .customYellow)
                     KategoriItem(title: "Buah", imageName: "tahugoreng", backgroundColor: .customGreen)
                 }
@@ -159,9 +159,9 @@ struct CategoryView: View {
                                 KategoriView()
                                 
                                 VStack(spacing: 12) {
-                                    foodCardView(food: foodItem(imageName: "nasi", name: "Nasi Kuning Komplit", calories: 550))
-                                    foodCardView(food: foodItem(imageName: "ayambetutu", name: "Sate Ayam", calories: 300))
-                                    foodCardView(food: foodItem(imageName: "sayurasem", name: "Gado-Gado", calories: 400))
+                                    foodCardView(food: foodItem(imageName: "nasi kuning", name: "Nasi Kuning Komplit", calories: 550))
+                                    foodCardView(food: foodItem(imageName: "sate ayam", name: "Sate Ayam", calories: 300))
+                                    foodCardView(food: foodItem(imageName: "nasi goreng", name: "Lotek Komplit", calories: 400))
                                 }
                                 .padding(.top)
                                 Spacer(minLength: 80)
