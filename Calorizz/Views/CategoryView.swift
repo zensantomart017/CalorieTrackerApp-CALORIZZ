@@ -14,6 +14,8 @@ struct foodItem: Identifiable {
     let calories: Int
 }
 
+
+
 func foodCardView(food: foodItem) -> some View {
     HStack(spacing: 16) {
         Image(food.imageName)
