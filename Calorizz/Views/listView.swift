@@ -19,8 +19,7 @@ struct listView: View {
                     
                     Spacer()
                     
-                    Button{
-                    }label:{
+                    NavigationLink(destination: CategoryView()){
                         Label("", systemImage: "plus")
                             .foregroundStyle(.shadedGreen)
                             .font(.system(size: 25))
