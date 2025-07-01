@@ -78,14 +78,14 @@ struct WelcomeView: View {
                     NavigationLink("", destination: CategoryView(), isActive: $navigate).hidden()
                 }
                 .padding()
-//                .onAppear() {
-//                    if !name.isEmpty {
-//                        isReturningUser = true
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//                            navigate = true
-//                        }
-//                    }
-//                }
+                .onAppear() {
+                    if !name.isEmpty {
+                        isReturningUser = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            navigate = true
+                        }
+                    }
+                }
             }
         }
     }
