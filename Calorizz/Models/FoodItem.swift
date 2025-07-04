@@ -10,10 +10,12 @@ import Foundation
 struct FoodItem: Identifiable, Codable {
     let id = UUID()
     let name: String
-    let calories: String
+    let calories: Int
+    let category: String
     
     enum CodingKeys: String, CodingKey {
         case name
         case calories
+        case category
     }
 }

@@ -7,24 +7,15 @@
 
 import SwiftUI
 
-struct foodItem: Identifiable {
-    let id = UUID()
-    let imageName: String
-    let name: String
-    let calories: Int
-}
-
-
-
-func foodCardView(food: foodItem) -> some View {
-    HStack(spacing: 16) {
-        Image(food.imageName)
+func foodCardView(food: FoodItem, onAdd: @escaping () -> Void) -> some View {
+    HStack(alignment: .center, spacing: 16) {
+        Image("photo")
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 50, height: 50)
             .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius: 5)
-
+            .shadow(radius: 10)
+        
         VStack(alignment: .leading, spacing: 4) {
             Text(food.name)
                 .font(.headline)
@@ -32,13 +23,13 @@ func foodCardView(food: foodItem) -> some View {
             
             Text("\(food.calories) Kkal")
                 .font(.subheadline)
-                .foregroundColor(.shadedGreen)
+                .foregroundColor(.green)
         }
-
+        
         Spacer()
-
+        
         Button {
-            print("Add \(food.name) tapped!")
+            onAdd()
         } label: {
             Image(systemName: "plus.circle.fill")
                 .font(.title)
@@ -53,57 +44,13 @@ func foodCardView(food: foodItem) -> some View {
     .padding(.horizontal)
 }
 
-
-struct KategoriItem: View {
-    let title: String
-    let imageName: String
-    let backgroundColor: Color
-
-    var body: some View {
-        VStack(spacing: 8) {
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 80, height: 80)
-                .clipShape(Circle())
-            Text(title)
-                .font(.subheadline)
-                .foregroundColor(.black)
-        }
-        .padding()
-        .frame(width: 100)
-        .background(backgroundColor)
-        .cornerRadius(20)
-    }
-}
-
-struct KategoriView: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Categories")
-                .font(.title2)
-                .fontWeight(.semibold)
-                .foregroundColor(.black)
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 15) {
-                    KategoriItem(title: "Nasi", imageName: "nasi", backgroundColor: .customOrange)
-                    KategoriItem(title: "Ayam", imageName: "ayambetutu", backgroundColor: .customYellow)
-                    KategoriItem(title: "Ikan", imageName: "jahirgoreng", backgroundColor: .customGreen)
-                    KategoriItem(title: "Daging", imageName: "daging", backgroundColor: .customOrange)
-                    KategoriItem(title: "Sayur", imageName: "sayurasem", backgroundColor: .customYellow)
-                    KategoriItem(title: "Buah", imageName: "tahugoreng", backgroundColor: .customGreen)
-                }
-                .padding(.vertical, 4)
-            }
-        }
-        .padding(.horizontal)
-    }
-}
-
 struct CategoryView: View {
     @AppStorage("username") private var name = ""
+    @StateObject private var viewModel = FoodViewModel()
+    @State private var selectedFoods: [FoodItem] = []
+    @State private var selectedCategory: String = "Nasi"
     @State private var searchBar: String = ""
-    @State private var showCamera = false
+    @State private var showCamera: Bool = false
     @State private var image: UIImage?
     @Environment(\.colorScheme) var colorScheme
     
@@ -118,6 +65,11 @@ struct CategoryView: View {
                             .font(.title.bold())
                             .foregroundColor(.orange)
                         Spacer()
+                        Image("logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 32)
+                            .padding(.horizontal)
                     }
                     .padding(.horizontal)
                     .padding(.top, 40)
@@ -156,18 +108,45 @@ struct CategoryView: View {
                         }
                         .padding(.horizontal)
                         
-                        ScrollView(showsIndicators: false) {
-                            VStack(alignment: .leading, spacing: 16) {
-                                KategoriView()
-                                
-                                VStack(spacing: 12) {
-                                    foodCardView(food: foodItem(imageName: "nasi kuning", name: "Nasi Kuning Komplit", calories: 550))
-                                    foodCardView(food: foodItem(imageName: "sate ayam", name: "Sate Ayam", calories: 300))
-                                    foodCardView(food: foodItem(imageName: "nasi goreng", name: "Lotek Komplit", calories: 400))
+                        Text("Categories")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 15) {
+                                ForEach(viewModel.uniqueCategories, id: \.self) { category in
+                                    Button(action: {
+                                        selectedCategory = category
+                                    }) {
+                                        Text(category)
+                                            .padding(.vertical, 8)
+                                            .padding(.horizontal, 16)
+                                            .background(selectedCategory == category ? Color.orange : Color.gray.opacity(0.1))
+                                            .foregroundColor(.primary)
+                                            .cornerRadius(12)
+                                    }
                                 }
-                                .padding(.top)
-                                Spacer(minLength: 80)
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 10)
+                        }
+                        
+                        ScrollView(showsIndicators: false) {
+                            VStack(spacing: 12) {
+                                ForEach(viewModel.foods(for: selectedCategory)) { food in
+                                    foodCardView(food: food) {
+                                        if !selectedFoods.contains(where: { $0.name == food.name }) {
+                                            selectedFoods.append(food)
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.top)
+                            .padding(.bottom, 100)
+                            .shadow(color: colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -178,11 +157,10 @@ struct CategoryView: View {
                 }
                 
                 HStack {
-                    Text("5 Item")
+                    Text("\(viewModel.foods(for: selectedCategory).count) Item")
                         .font(.body)
                     Spacer()
                     NavigationLink(destination: listView()) {
-                        
                         Text("Calculate")
                             .font(.headline)
                             .foregroundColor(Color(.systemBackground))
@@ -200,6 +178,9 @@ struct CategoryView: View {
                 .ignoresSafeArea(edges: .bottom)
             }
             .navigationBarBackButtonHidden(true)
+            .onAppear {
+                viewModel.loadAllFoods()
+            }
         }
     }
 }

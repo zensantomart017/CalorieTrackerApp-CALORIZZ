@@ -7,45 +7,9 @@
 
 import SwiftUI
 
-func foodCardView(food: FoodItem) -> some View {
-    HStack(alignment: .center, spacing: 16) {
-        Image("photo")
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 50, height: 50)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius: 10)
-        
-        VStack(alignment: .leading, spacing: 4) {
-            Text(food.name)
-                .font(.headline)
-                .foregroundStyle(.primary)
-            
-            Text("\(food.calories) Kkal")
-                .font(.subheadline)
-                .foregroundColor(.green)
-        }
-        
-        Spacer()
-        
-        Button {
-            print("Add \(food.name) tapped!")
-        } label: {
-            Image(systemName: "plus.circle.fill")
-                .font(.title)
-                .foregroundColor(.orange)
-        }
-        .buttonStyle(PlainButtonStyle())
-    }
-    .padding()
-    .background(Color(.systemBackground))
-    .cornerRadius(15)
-    .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
-    .padding(.horizontal)
-}
-
 struct SearchView: View {
     @StateObject private var viewModel = FoodViewModel()
+    @State private var selectedFoods: [FoodItem] = []
     @AppStorage("username") private var name = ""
     @State private var searchBar: String = ""
     @State private var showCamera = false
@@ -65,7 +29,6 @@ struct SearchView: View {
                                     Image(systemName: "arrow.backward")
                                         .foregroundStyle(.primary)
                                 }
-                                
                                 HStack {
                                     TextField("Search", text: $searchBar)
                                         .foregroundColor(.gray)
@@ -80,7 +43,6 @@ struct SearchView: View {
                                     }
                                 }
                                 .padding()
-                                
                             }
                             .padding(.horizontal)
                             .frame(height: 50)
@@ -95,7 +57,9 @@ struct SearchView: View {
                         ScrollView(showsIndicators: false) {
                             VStack(alignment: .leading, spacing: 16){
                                 ForEach(viewModel.items) { food in
-                                    foodCardView(food: food)
+                                    foodCardView(food: food, onAdd: {
+                                        addFood(food)
+                                    })
                                 }
                             }
                             .padding(.top)
@@ -110,6 +74,11 @@ struct SearchView: View {
                 }
             }
             .navigationBarBackButtonHidden(true)
+        }
+    }
+    private func addFood(_ food: FoodItem) {
+        if !selectedFoods.contains(where: { $0.name == food.name }) {
+            selectedFoods.append(food)
         }
     }
 }
