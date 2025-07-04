@@ -53,6 +53,7 @@ struct CategoryView: View {
     @State private var showCamera: Bool = false
     @State private var image: UIImage?
     @Environment(\.colorScheme) var colorScheme
+    let categoryOrder = ["Nasi", "Lauk", "Sayur", "Buah", "Umbi", "Sambal", "Makanan Olahan", "Camilan", "Hidangan Penutup", "Lainnya"]
     
     var body: some View {
         NavigationStack {
@@ -117,7 +118,7 @@ struct CategoryView: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 15) {
-                                ForEach(viewModel.uniqueCategories, id: \.self) { category in
+                                ForEach(categoryOrder.filter { viewModel.uniqueCategories.contains($0) }, id: \.self) { category in
                                     Button(action: {
                                         selectedCategory = category
                                     }) {
@@ -160,7 +161,7 @@ struct CategoryView: View {
                     Text("\(selectedFoods.count) Item")
                         .font(.body)
                     Spacer()
-                    NavigationLink(destination: listView()) {
+                    NavigationLink(destination: ListView(selectedFoods: selectedFoods)) {
                         Text("Calculate")
                             .font(.headline)
                             .foregroundColor(Color(.systemBackground))

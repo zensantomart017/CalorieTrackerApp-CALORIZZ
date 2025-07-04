@@ -7,7 +7,12 @@
 
 import SwiftUI
 
-struct listView: View {
+struct ListView: View {
+    var selectedFoods: [FoodItem]
+        
+        var totalCalories: Int {
+            selectedFoods.reduce(0) { $0 + $1.calories }
+        }
     var body: some View {
         NavigationStack{
             VStack{
@@ -31,12 +36,10 @@ struct listView: View {
                 
                 ScrollView {
                     VStack(alignment: .trailing, spacing: 10) {
-                        MakananItemView(imageName: "ayambetutu", title: "Ayam Betutu", calories: "20 kkal")
-                        MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
-                        MakananItemView(imageName: "jahirgoreng", title: "Ikan Jahir Goreng", calories: "20 kkal")
-                        MakananItemView(imageName: "nasi", title: "Nasi Putih", calories: "20 kkal")
-                        MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
-                        MakananItemView(imageName: "sayurasem", title: "Sayur Asem", calories: "20 kkal")
+                        ForEach(selectedFoods) { food in
+                            MakananItemView(
+                                imageName: imageName(for: food.name), title: food.name, calories: "\(food.calories) kkal")
+                        }
                     }
                 }
                 
@@ -44,17 +47,27 @@ struct listView: View {
                     Text("Total : ")
                         .font(.headline)
                     
-                    Spacer()
-                    
-                    Text("kkal")
+                                    
+                    Text("\(totalCalories) kkal")
                         .font(.headline)
                         .foregroundColor(.primary)
                         .padding(.horizontal)
+                    Spacer()
                 }
                 .padding()
             }
             .background(Color(.systemBackground))
             .navigationBarBackButtonHidden(true)
+        }
+    }
+    
+    func imageName(for name: String) -> String {
+        switch name {
+        case "Ayam Betutu": return "ayambetutu"
+        case "Sayur Asem": return "sayurasem"
+        case "Ikan Jahir Goreng": return "jahirgoreng"
+        case "Nasi Putih": return "nasi"
+        default: return "photo"
         }
     }
     
@@ -120,5 +133,5 @@ struct listView: View {
 }
 
 #Preview {
-    listView()
+    ListView(selectedFoods: [])
 }
