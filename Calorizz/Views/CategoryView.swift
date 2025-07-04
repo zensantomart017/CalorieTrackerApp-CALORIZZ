@@ -157,7 +157,7 @@ struct CategoryView: View {
                 }
                 
                 HStack {
-                    Text("\(viewModel.foods(for: selectedCategory).count) Item")
+                    Text("\(selectedFoods.count) Item")
                         .font(.body)
                     Spacer()
                     NavigationLink(destination: listView()) {
