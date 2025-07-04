@@ -82,7 +82,7 @@ struct CategoryView: View {
                                 NavigationLink(destination: SearchView()) {
                                     Image(systemName: "magnifyingglass")
                                         .foregroundColor(.gray)
-                                    TextField("Search", text: $searchBar)
+                                    TextField("Cari menu", text: $searchBar)
                                         .foregroundColor(.gray)
                                     Spacer()
                                 }}
@@ -109,7 +109,7 @@ struct CategoryView: View {
                         }
                         .padding(.horizontal)
                         
-                        Text("Categories")
+                        Text("Kategori")
                             .font(.title2)
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
@@ -162,7 +162,7 @@ struct CategoryView: View {
                         .font(.body)
                     Spacer()
                     NavigationLink(destination: ListView(selectedFoods: selectedFoods)) {
-                        Text("Calculate")
+                        Text("Hitung")
                             .font(.headline)
                             .foregroundColor(Color(.systemBackground))
                             .padding(.horizontal, 16)
