@@ -79,7 +79,7 @@ struct CategoryView: View {
                     VStack(spacing: 20) {
                         HStack(spacing: 12) {
                             HStack {
-                                NavigationLink(destination: SearchView()) {
+                                NavigationLink(destination: SearchView(selectedFoods: $selectedFoods)) {
                                     Image(systemName: "magnifyingglass")
                                         .foregroundColor(.gray)
                                     TextField("Cari menu", text: $searchBar)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
     @StateObject private var viewModel = FoodViewModel()
-    @State private var selectedFoods: [FoodItem] = []
+    @Binding var selectedFoods: [FoodItem]
     @AppStorage("username") private var name = ""
     @State private var searchBar: String = ""
     @State private var showCamera = false
@@ -105,5 +105,5 @@ struct SearchView: View {
 }
 
 #Preview {
-    CategoryView()
+    SearchView(selectedFoods: .constant([]))
 }
