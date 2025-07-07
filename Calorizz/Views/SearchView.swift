@@ -59,23 +59,28 @@ struct SearchView: View {
                                 ForEach(viewModel.items) { food in
                                     foodCardView(
                                         food: food,
-                                        isAdded: selectedFoods.contains(where: { $0.id == food.id }), // ← tambahkan ini
+                                        isAdded: selectedFoods.contains(where: { $0.id == food.id }),
                                         onAdd: {
-                                            addFood(food)
+                                            if let index = selectedFoods.firstIndex(where: { $0.id == food.id }) {
+                                                selectedFoods.remove(at: index) // ← hapus jika sudah ada
+                                            } else {
+                                                selectedFoods.append(food) // ← tambahkan jika belum ada
+                                            }
                                         }
                                     )
                                 }
 
+
                             }
                             .padding(.top)
-                            .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.5), radius: 2, x: 0, y: 1)
+//                            .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.5), radius: 2, x: 0, y: 1)
                         }
                         Spacer(minLength: 80)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, 20)
                     .background(Color(.systemBackground))
-                    .shadow(radius: 5)
+                  //  .shadow(radius: 5)
                 }
                 
                 HStack {
