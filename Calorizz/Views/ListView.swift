@@ -170,7 +170,7 @@ struct ListView: View {
                     Button(action: onMinus) {
                         Image(systemName: "minus.circle.fill")
                             .foregroundColor(.orange)
-                            .padding(2)
+                            .padding(13)
                     }
 
                     Text("\(quantity)")
