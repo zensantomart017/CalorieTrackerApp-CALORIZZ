@@ -142,7 +142,7 @@ struct CategoryView: View {
                                         if let index = selectedFoods.firstIndex(where: { $0.name == food.name }) {
                                                 selectedFoods.remove(at: index)
                                             } else {
-                                                selectedFoods.append(food) 
+                                                selectedFoods.append(food)
                                             }
                                         }
                                     }
