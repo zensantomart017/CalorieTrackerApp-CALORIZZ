@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FoodItem: Identifiable, Codable {
+struct FoodItem: Identifiable, Codable, Equatable {
     let id = UUID()
     let name: String
     let calories: Int

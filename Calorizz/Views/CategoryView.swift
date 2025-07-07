@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-func foodCardView(food: FoodItem, onAdd: @escaping () -> Void) -> some View {
+func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> some View {
     HStack(alignment: .center, spacing: 16) {
         Image("photo")
             .resizable()
@@ -38,7 +38,7 @@ func foodCardView(food: FoodItem, onAdd: @escaping () -> Void) -> some View {
         .buttonStyle(PlainButtonStyle())
     }
     .padding()
-    .background(Color(.systemBackground))
+    .background(isAdded ? Color.orange.opacity(0.2) : Color(.systemBackground)) // <- Warna berubah
     .cornerRadius(15)
     .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
     .padding(.horizontal)
@@ -138,12 +138,16 @@ struct CategoryView: View {
                         ScrollView(showsIndicators: false) {
                             VStack(spacing: 12) {
                                 ForEach(viewModel.foods(for: selectedCategory)) { food in
-                                    foodCardView(food: food) {
-                                        if !selectedFoods.contains(where: { $0.name == food.name }) {
-                                            selectedFoods.append(food)
+                                    foodCardView(food: food, isAdded: selectedFoods.contains(where: { $0.name == food.name })) {
+                                        if let index = selectedFoods.firstIndex(where: { $0.name == food.name }) {
+                                                selectedFoods.remove(at: index)
+                                            } else {
+                                                selectedFoods.append(food) 
+                                            }
                                         }
                                     }
-                                }
+                                
+
                             }
                             .padding(.top)
                             .padding(.bottom, 100)

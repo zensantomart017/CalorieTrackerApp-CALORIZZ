@@ -57,10 +57,15 @@ struct SearchView: View {
                         ScrollView(showsIndicators: false) {
                             VStack(alignment: .leading, spacing: 16){
                                 ForEach(viewModel.items) { food in
-                                    foodCardView(food: food, onAdd: {
-                                        addFood(food)
-                                    })
+                                    foodCardView(
+                                        food: food,
+                                        isAdded: selectedFoods.contains(where: { $0.id == food.id }), // ← tambahkan ini
+                                        onAdd: {
+                                            addFood(food)
+                                        }
+                                    )
                                 }
+
                             }
                             .padding(.top)
                             .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.5), radius: 2, x: 0, y: 1)
