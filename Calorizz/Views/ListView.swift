@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct ListView: View {
-    var selectedFoods: [FoodItem]
-        
-        var totalCalories: Int {
-            selectedFoods.reduce(0) { $0 + $1.calories }
+    
+    @State private var quantities: [UUID: Int] = [:]
+    @State private var showConfirm = false
+    @State private var pendingDelete: FoodItem?
+
+
+    @State var selectedFoods: [FoodItem]
+
+    var totalCalories: Int {
+        selectedFoods.reduce(0) { sum, food in
+            let qty = quantities[food.id] ?? 0
+            return sum + food.calories * qty
         }
+    }
+
     var body: some View {
         NavigationStack{
             VStack{
@@ -37,9 +47,27 @@ struct ListView: View {
                 ScrollView {
                     VStack(alignment: .trailing, spacing: 10) {
                         ForEach(selectedFoods) { food in
-                            MakananItemView(
-                                imageName: imageName(for: food.name), title: food.name, calories: "\(food.calories) kkal")
+                            if let qty = quantities[food.id] {
+                                MakananItemView(
+                                    imageName: imageName(for: food.name),
+                                    title: food.name,
+                                    calories: "\(food.calories) kkal",
+                                    quantity: qty,
+                                    onMinus: {
+                                        if qty > 1 {
+                                            quantities[food.id]! -= 1
+                                        } else {
+                                            pendingDelete = food
+                                            showConfirm = true
+                                        }
+                                    },
+                                    onPlus: {
+                                        quantities[food.id, default: 0] += 1
+                                    }
+                                )
+                            }
                         }
+
                     }
                 }
                 
@@ -58,7 +86,30 @@ struct ListView: View {
             }
             .background(Color(.systemBackground))
             .navigationBarBackButtonHidden(true)
+            
+            .alert("Hapus item?", isPresented: $showConfirm) {
+                Button("Ya", role: .destructive) {
+                    if let food = pendingDelete {
+                        delete(food)
+                    }
+                }
+                Button("Batal", role: .cancel) { }
+            } message: {
+                if let food = pendingDelete {
+                    Text("Apakah yakin ingin menghapus \"\(food.name)\" dari list makanan?")
+                }
+            }
+
         }
+        
+        .onAppear {
+            if quantities.isEmpty {
+                for food in selectedFoods {
+                    quantities[food.id] = 1 // Default 1 porsi saat tampil
+                }
+            }
+        }
+
     }
     
     func imageName(for name: String) -> String {
@@ -71,10 +122,23 @@ struct ListView: View {
         }
     }
     
+    func delete(_ food: FoodItem) {
+        quantities.removeValue(forKey: food.id)
+        // Untuk menghapus dari list, karena selectedFoods bersifat let,
+        // kita harus mengubahnya jadi @State dulu. Jadi:
+        // Ubah var selectedFoods → @State var selectedFoods
+        selectedFoods.removeAll { $0.id == food.id }
+    }
+
+    
     struct MakananItemView: View {
         let imageName: String
         let title: String
         let calories: String
+        let quantity: Int
+        let onMinus: () -> Void
+        let onPlus: () -> Void            
+
         
         var body: some View {
             HStack (spacing: 20) {
@@ -102,22 +166,20 @@ struct ListView: View {
                 
                 Spacer()
                 
-                HStack(spacing : 1){
-                    Button{
-                    } label:{
-                        Label("", systemImage: "minus.circle.fill")
-                            .foregroundStyle(.orange)
+                HStack(spacing: 1) {
+                    Button(action: onMinus) {
+                        Image(systemName: "minus.circle.fill")
+                            .foregroundColor(.orange)
                             .padding(2)
                     }
-                    
-                    Text("1")
+
+                    Text("\(quantity)")
                         .font(.body)
                         .frame(width: 20)
-                    
-                    Button{
-                    } label:{
-                        Label("", systemImage: "plus.circle.fill")
-                            .foregroundStyle(.orange)
+
+                    Button(action: onPlus) {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.orange)
                             .padding(.horizontal)
                     }
                 }

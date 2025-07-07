@@ -30,7 +30,7 @@ struct SearchView: View {
                                         .foregroundStyle(.primary)
                                 }
                                 HStack {
-                                    TextField("Search", text: $searchBar)
+                                    TextField("Cari Menu", text: $searchBar)
                                         .foregroundColor(.gray)
                                     
                                     Button {
@@ -72,6 +72,27 @@ struct SearchView: View {
                     .background(Color(.systemBackground))
                     .shadow(radius: 5)
                 }
+                
+                HStack {
+                    Text("\(selectedFoods.count) Item")
+                        .font(.body)
+                    Spacer()
+                    NavigationLink(destination: ListView(selectedFoods: selectedFoods)) {
+                        Text("Hitung")
+                            .font(.headline)
+                            .foregroundColor(Color(.systemBackground))
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                            .background(.shadedGreen)
+                            .cornerRadius(10)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.top, 12)
+                .padding(.bottom, 30)
+                .padding(.horizontal)
+                .background(Color(.systemBackground))
+                .ignoresSafeArea(edges: .bottom)
             }
             .navigationBarBackButtonHidden(true)
         }
