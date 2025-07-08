@@ -46,6 +46,11 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
     )
 
     .padding(.horizontal)
+    .overlay(
+        RoundedRectangle(cornerRadius: 16)
+            .stroke(Color.gray.opacity(0.2), lineWidth: 0.5)
+            .padding(.horizontal)
+    )
 }
 
 class FoodSelectionModel: ObservableObject {
@@ -72,18 +77,25 @@ struct CategoryView: View {
                 VStack(spacing: 0) {
                     HStack {
                         Text("Hi, \(name)👋🏻")
-                            .font(.title.bold())
+                            .font(.largeTitle.bold())
                             .foregroundColor(.orange)
                         Spacer()
                         Image("logo")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 32)
+                            .frame(height: 40)
                             .padding(.horizontal)
                     }
                     .padding(.horizontal)
                     .padding(.top, 40)
                     .padding(.bottom, 16)
+                    
+                    Text("Cek kalori makananmu dulu yuk!")
+                        .font(.body)
+//                        .fontWeight(.semibold)
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
                     
                     VStack(spacing: 20) {
                         HStack(spacing: 12) {
@@ -118,12 +130,6 @@ struct CategoryView: View {
                         }
                         .padding(.horizontal)
                         
-                        Text("Kategori")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.primary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal)
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 15) {
@@ -153,6 +159,7 @@ struct CategoryView: View {
                                             } else {
                                                 selectionModel.selectedFoods.append(food)
                                             }
+                                        
                                         }
                                     }
                                 
@@ -161,13 +168,14 @@ struct CategoryView: View {
                             .padding(.top)
                             .padding(.bottom, 100)
                             //.shadow(color: colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+                            .background(.white)
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, 20)
                     .background(Color(.systemBackground))
                     .cornerRadius(30, corners: [.topLeft, .topRight])
-                    .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(1), radius: 5, x: 0, y: 4)
+//                    .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(1), radius: 5, x: 0, y: 4)
                 }
                 
                 HStack {
@@ -181,7 +189,7 @@ struct CategoryView: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 10)
-                            .background(selectionModel.selectedFoods.isEmpty ? Color.gray : Color.shadedGreen)
+                            .background(selectionModel.selectedFoods.isEmpty ? Color.gray : Color.orange)
                             .cornerRadius(10)
                     }
                     )
