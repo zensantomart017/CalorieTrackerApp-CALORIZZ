@@ -9,12 +9,14 @@ import SwiftUI
 
 struct SearchView: View {
     @StateObject private var viewModel = FoodViewModel()
-    @Binding var selectedFoods: [FoodItem]
+    @ObservedObject var selectionModel: FoodSelectionModel
     @AppStorage("username") private var name = ""
     @State private var searchBar: String = ""
     @State private var showCamera = false
     @State private var image: UIImage?
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) private var dismiss
+
     
     var body: some View {
         NavigationStack {
@@ -25,10 +27,13 @@ struct SearchView: View {
                     VStack(spacing: 20) {
                         HStack(spacing: 12) {
                             HStack {
-                                NavigationLink(destination: CategoryView()){
+                                Button(action: {
+                                  
+                                    dismiss()
+                                }) {
                                     Image(systemName: "arrow.backward")
-                                        .foregroundStyle(.primary)
                                 }
+
                                 HStack {
                                     TextField("Cari Menu", text: $searchBar)
                                         .foregroundColor(.gray)
@@ -59,12 +64,12 @@ struct SearchView: View {
                                 ForEach(viewModel.items) { food in
                                     foodCardView(
                                         food: food,
-                                        isAdded: selectedFoods.contains(where: { $0.id == food.id }),
+                                        isAdded: selectionModel.selectedFoods.contains(where: { $0.id == food.id }),
                                         onAdd: {
-                                            if let index = selectedFoods.firstIndex(where: { $0.id == food.id }) {
-                                                selectedFoods.remove(at: index) // ← hapus jika sudah ada
+                                            if let index = selectionModel.selectedFoods.firstIndex(where: { $0.id == food.id }) {
+                                                selectionModel.selectedFoods.remove(at: index) // ← hapus jika sudah ada
                                             } else {
-                                                selectedFoods.append(food) // ← tambahkan jika belum ada
+                                                selectionModel.selectedFoods.append(food) // ← tambahkan jika belum ada
                                             }
                                         }
                                     )
@@ -80,14 +85,14 @@ struct SearchView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, 20)
                     .background(Color(.systemBackground))
-                  //  .shadow(radius: 5)
+                   // .shadow(radius: 5)
                 }
                 
                 HStack {
-                    Text("\(selectedFoods.count) Item")
+                    Text("\(selectionModel.selectedFoods.count) Item")
                         .font(.body)
                     Spacer()
-                    NavigationLink(destination: ListView(selectedFoods: selectedFoods)) {
+                    NavigationLink(destination: ListView(selectionModel: selectionModel)) {
                         Text("Hitung")
                             .font(.headline)
                             .foregroundColor(Color(.systemBackground))
@@ -108,12 +113,12 @@ struct SearchView: View {
         }
     }
     private func addFood(_ food: FoodItem) {
-        if !selectedFoods.contains(where: { $0.name == food.name }) {
-            selectedFoods.append(food)
+        if !selectionModel.selectedFoods.contains(where: { $0.name == food.name }) {
+            selectionModel.selectedFoods.append(food)
         }
     }
 }
 
 #Preview {
-    SearchView(selectedFoods: .constant([]))
+    SearchView(selectionModel: FoodSelectionModel())
 }

@@ -75,7 +75,7 @@ struct WelcomeView: View {
                         .disabled(name.isEmpty)
                     }
                     
-                    NavigationLink("", destination: CategoryView(), isActive: $navigate).hidden()
+                    NavigationLink("", destination: CategoryView(selectionModel: FoodSelectionModel()), isActive: $navigate).hidden()
                 }
                 .padding()
                 .onAppear() {

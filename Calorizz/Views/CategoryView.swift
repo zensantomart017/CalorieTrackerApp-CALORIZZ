@@ -44,10 +44,15 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
     .padding(.horizontal)
 }
 
+class FoodSelectionModel: ObservableObject {
+    @Published var selectedFoods: [FoodItem] = []
+}
+
+
 struct CategoryView: View {
     @AppStorage("username") private var name = ""
     @StateObject private var viewModel = FoodViewModel()
-    @State private var selectedFoods: [FoodItem] = []
+    @ObservedObject var selectionModel: FoodSelectionModel
     @State private var selectedCategory: String = "Nasi"
     @State private var searchBar: String = ""
     @State private var showCamera: Bool = false
@@ -79,7 +84,7 @@ struct CategoryView: View {
                     VStack(spacing: 20) {
                         HStack(spacing: 12) {
                             HStack {
-                                NavigationLink(destination: SearchView(selectedFoods: $selectedFoods)) {
+                                NavigationLink(destination: SearchView(selectionModel: selectionModel)) {
                                     Image(systemName: "magnifyingglass")
                                         .foregroundColor(.gray)
                                     TextField("Cari menu", text: $searchBar)
@@ -138,11 +143,11 @@ struct CategoryView: View {
                         ScrollView(showsIndicators: false) {
                             VStack(spacing: 12) {
                                 ForEach(viewModel.foods(for: selectedCategory)) { food in
-                                    foodCardView(food: food, isAdded: selectedFoods.contains(where: { $0.name == food.name })) {
-                                        if let index = selectedFoods.firstIndex(where: { $0.name == food.name }) {
-                                                selectedFoods.remove(at: index)
+                                    foodCardView(food: food, isAdded: selectionModel.selectedFoods.contains(where: { $0.name == food.name })) {
+                                        if let index = selectionModel.selectedFoods.firstIndex(where: { $0.name == food.name }) {
+                                            selectionModel.selectedFoods.remove(at: index)
                                             } else {
-                                                selectedFoods.append(food)
+                                                selectionModel.selectedFoods.append(food)
                                             }
                                         }
                                     }
@@ -162,18 +167,21 @@ struct CategoryView: View {
                 }
                 
                 HStack {
-                    Text("\(selectedFoods.count) Item")
+                    Text("\(selectionModel.selectedFoods.count) Item")
                         .font(.body)
                     Spacer()
-                    NavigationLink(destination: ListView(selectedFoods: selectedFoods)) {
+                    NavigationLink(destination: ListView(selectionModel: selectionModel),
+                    label: {
                         Text("Hitung")
                             .font(.headline)
-                            .foregroundColor(Color(.systemBackground))
+                            .foregroundColor(.white)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 10)
-                            .background(.shadedGreen)
+                            .background(selectionModel.selectedFoods.isEmpty ? Color.gray : Color.shadedGreen)
                             .cornerRadius(10)
                     }
+                    )
+                    .disabled(selectionModel.selectedFoods.isEmpty)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.top, 12)
@@ -191,5 +199,5 @@ struct CategoryView: View {
 }
 
 #Preview {
-    CategoryView()
+    CategoryView(selectionModel: FoodSelectionModel())
 }

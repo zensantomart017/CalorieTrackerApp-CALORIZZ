@@ -12,12 +12,15 @@ struct ListView: View {
     @State private var quantities: [UUID: Int] = [:]
     @State private var showConfirm = false
     @State private var pendingDelete: FoodItem?
+   @ObservedObject var selectionModel: FoodSelectionModel
+   
 
 
-    @State var selectedFoods: [FoodItem]
+
+    //@State var selectedFoods: [FoodItem]
 
     var totalCalories: Int {
-        selectedFoods.reduce(0) { sum, food in
+        selectionModel.selectedFoods.reduce(0) { sum, food in
             let qty = quantities[food.id] ?? 0
             return sum + food.calories * qty
         }
@@ -27,26 +30,28 @@ struct ListView: View {
         NavigationStack{
             VStack{
                 HStack(spacing: 16) {
-                    NavigationLink(destination: CategoryView()) {
+
+                    NavigationLink(destination: CategoryView(selectionModel: FoodSelectionModel())) {
                         Label("", systemImage: "chevron.left")
                             .foregroundStyle(.primary)
                     }
                     
-                    Spacer()
-                    
-                    NavigationLink(destination: CategoryView()){
+                    Spacer(minLength: 0)
+
+                    NavigationLink(destination: CategoryView(selectionModel: selectionModel)) {
                         Label("", systemImage: "plus")
                             .foregroundStyle(.shadedGreen)
                             .font(.system(size: 25))
                     }
                     .font(.headline)
                     .padding(.horizontal)
+
                 }
                 .padding(10)
                 
                 ScrollView {
                     VStack(alignment: .trailing, spacing: 10) {
-                        ForEach(selectedFoods) { food in
+                        ForEach(selectionModel.selectedFoods) { food in
                             if let qty = quantities[food.id] {
                                 MakananItemView(
                                     imageName: imageName(for: food.name),
@@ -104,7 +109,7 @@ struct ListView: View {
         
         .onAppear {
             if quantities.isEmpty {
-                for food in selectedFoods {
+                for food in selectionModel.selectedFoods{
                     quantities[food.id] = 1 // Default 1 porsi saat tampil
                 }
             }
@@ -127,7 +132,7 @@ struct ListView: View {
         // Untuk menghapus dari list, karena selectedFoods bersifat let,
         // kita harus mengubahnya jadi @State dulu. Jadi:
         // Ubah var selectedFoods → @State var selectedFoods
-        selectedFoods.removeAll { $0.id == food.id }
+        selectionModel.selectedFoods.removeAll { $0.id == food.id }
     }
 
     
@@ -195,5 +200,6 @@ struct ListView: View {
 }
 
 #Preview {
-    ListView(selectedFoods: [])
+    ListView(selectionModel: FoodSelectionModel())
 }
+

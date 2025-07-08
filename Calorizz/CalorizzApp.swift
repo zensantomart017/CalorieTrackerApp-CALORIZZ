@@ -10,8 +10,11 @@ import SwiftUI
 @main
 struct CalorizzApp: App {
     let persistenceController = PersistenceController.shared
+    @State private var selectedFoods: [FoodItem] = []
+
 
     var body: some Scene {
+        
         WindowGroup {
             WelcomeView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
