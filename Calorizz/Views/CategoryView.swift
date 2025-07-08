@@ -31,7 +31,7 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
         Button {
             onAdd()
         } label: {
-            Image(systemName: "plus.circle.fill")
+            Image(systemName: isAdded ? "checkmark.circle.fill" : "plus.circle.fill")
                 .font(.title)
                 .foregroundColor(.orange)
         }
@@ -40,7 +40,11 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
     .padding()
     .background(isAdded ? Color.orange.opacity(0.2) : Color(.systemBackground)) // <- Warna berubah
     .cornerRadius(15)
-    .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+    .overlay(
+        RoundedRectangle(cornerRadius: 15)
+            .stroke(isAdded ? Color.orange : Color.gray.opacity(0.3), lineWidth: 1)
+    )
+
     .padding(.horizontal)
 }
 
@@ -156,7 +160,7 @@ struct CategoryView: View {
                             }
                             .padding(.top)
                             .padding(.bottom, 100)
-                            .shadow(color: colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+                            //.shadow(color: colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
