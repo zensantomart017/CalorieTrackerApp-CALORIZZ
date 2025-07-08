@@ -24,6 +24,10 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
             Text("\(food.calories) Kkal")
                 .font(.subheadline)
                 .foregroundColor(.green)
+            
+            Text("\(food.portion)")
+                .font(.subheadline)
+                .foregroundColor(.orange)
         }
         
         Spacer()

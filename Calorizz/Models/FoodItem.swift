@@ -12,10 +12,12 @@ struct FoodItem: Identifiable, Codable, Equatable {
     let name: String
     let calories: Int
     let category: String
+    let portion: String
     
     enum CodingKeys: String, CodingKey {
         case name
         case calories
         case category
+        case portion
     }
 }
