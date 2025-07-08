@@ -27,7 +27,6 @@ struct ListView: View {
     }
 
     var body: some View {
-        NavigationStack{
             VStack{
                 ScrollView {
                     VStack(alignment: .trailing, spacing: 10) {
@@ -105,8 +104,6 @@ struct ListView: View {
                     Text("Apakah yakin ingin menghapus \"\(food.name)\" dari list makanan?")
                 }
             }
-
-        }
         
         .onAppear {
             if quantities.isEmpty {

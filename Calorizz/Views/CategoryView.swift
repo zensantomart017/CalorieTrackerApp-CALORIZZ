@@ -53,6 +53,10 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
             .stroke(Color.gray.opacity(0.2), lineWidth: 0.5)
             .padding(.horizontal)
     )
+    .background(isAdded ? Color.orange.opacity(0.2) : Color(.systemBackground)) // <- Warna berubah
+    .cornerRadius(15)
+    .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+    .padding(.horizontal)
 }
 
 class FoodSelectionModel: ObservableObject {
@@ -127,7 +131,12 @@ struct CategoryView: View {
                             ImagePicker(selectedImage: $image)
                         }
                         .padding(.horizontal)
-                        
+                        Text("Kategori")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 15) {
@@ -195,6 +204,18 @@ struct CategoryView: View {
                             .padding(.horizontal, 16)
                             .background(Color(.systemBackground))
                         }
+                    Text("\(selectionModel.selectedFoods.count) Item")
+                        .font(.body)
+                    Spacer()
+                    NavigationLink(destination: ListView(selectionModel: selectionModel),
+                    label: {
+                        Text("Hitung")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                            .background(selectionModel.selectedFoods.isEmpty ? Color.gray : Color.shadedGreen)
+                            .cornerRadius(10)
                     }
                     
                     .padding(.horizontal, 16)
