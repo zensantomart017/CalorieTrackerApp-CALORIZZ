@@ -29,26 +29,6 @@ struct ListView: View {
     var body: some View {
         NavigationStack{
             VStack{
-                HStack(spacing: 16) {
-
-                    NavigationLink(destination: CategoryView(selectionModel: FoodSelectionModel())) {
-                        Label("", systemImage: "chevron.left")
-                            .foregroundStyle(.primary)
-                    }
-                    
-                    Spacer(minLength: 0)
-
-                    NavigationLink(destination: CategoryView(selectionModel: selectionModel)) {
-                        Label("", systemImage: "plus")
-                            .foregroundStyle(.shadedGreen)
-                            .font(.system(size: 25))
-                    }
-                    .font(.headline)
-                    .padding(.horizontal)
-
-                }
-                .padding(10)
-                
                 ScrollView {
                     VStack(alignment: .trailing, spacing: 10) {
                         ForEach(selectionModel.selectedFoods) { food in
@@ -76,21 +56,42 @@ struct ListView: View {
                     }
                 }
                 
-                HStack(){
-                    Text("Total : ")
-                        .font(.headline)
+                HStack {
+                    Spacer()
+
+                    Text("Total:")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.shadedGreen)
                     
-                                    
                     Text("\(totalCalories) kkal")
-                        .font(.headline)
-                        .foregroundColor(.primary)
-                        .padding(.horizontal)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.shadedGreen)
+
                     Spacer()
                 }
                 .padding()
+//                .background(Color.shadedGreen)
+                .cornerRadius(12)
+//                .shadow(radius: 4)
+                .padding(.horizontal)
+
             }
             .background(Color(.systemBackground))
-            .navigationBarBackButtonHidden(true)
+            .navigationTitle("Daftar Makanan")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(destination: CategoryView(selectionModel: FoodSelectionModel())) {
+                        Text("Selesai")
+                            .foregroundStyle(.primary)
+                            .font(.title3)
+                    }
+                }
+            }
+
+
+            //.navigationBarBackButtonHidden(true)
             
             .alert("Hapus item?", isPresented: $showConfirm) {
                 Button("Ya", role: .destructive) {
