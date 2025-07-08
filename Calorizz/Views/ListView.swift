@@ -12,13 +12,8 @@ struct ListView: View {
     @State private var quantities: [UUID: Int] = [:]
     @State private var showConfirm = false
     @State private var pendingDelete: FoodItem?
-   @ObservedObject var selectionModel: FoodSelectionModel
-   
-
-
-
-    //@State var selectedFoods: [FoodItem]
-
+    @ObservedObject var selectionModel: FoodSelectionModel
+    
     var totalCalories: Int {
         selectionModel.selectedFoods.reduce(0) { sum, food in
             let qty = quantities[food.id] ?? 0
