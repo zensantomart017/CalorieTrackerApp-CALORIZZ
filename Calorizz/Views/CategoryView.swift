@@ -38,7 +38,7 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
         .buttonStyle(PlainButtonStyle())
     }
     .padding()
-    .background(isAdded ? Color.orange.opacity(0.2) : Color(.systemBackground)) // <- Warna berubah
+    .background(isAdded ? Color.orange.opacity(0.2) : Color(.systemBackground))
     .cornerRadius(15)
     .overlay(
         RoundedRectangle(cornerRadius: 15)
