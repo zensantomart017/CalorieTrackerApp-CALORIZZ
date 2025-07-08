@@ -40,13 +40,13 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
     .padding()
     .background(isAdded ? Color.orange.opacity(0.2) : Color(.systemBackground))
     .background(isAdded ? Color.customYellow
-        .opacity(0.2) : Color(.systemBackground)) // <- Warna berubah
+        .opacity(0.2) : Color(.systemBackground))
     .cornerRadius(15)
     .overlay(
         RoundedRectangle(cornerRadius: 15)
-            .stroke(isAdded ? Color.orange : Color.gray.opacity(0.3), lineWidth: 1)
+            .stroke(isAdded ? Color.orange : Color.gray.opacity(0.2), lineWidth: 1)
     )
-
+    
     .padding(.horizontal)
     .overlay(
         RoundedRectangle(cornerRadius: 16)
@@ -92,14 +92,12 @@ struct CategoryView: View {
                     .padding(.top, 40)
                     .padding(.bottom, 16)
                     
-                    Text("Cek kalori makananmu dulu yuk!")
-                        .font(.body)
-//                        .fontWeight(.semibold)
-                        .foregroundColor(.primary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                    
                     VStack(spacing: 20) {
+                        Text("Cek kalori makananmu dulu yuk!")
+                            .font(.body)
+                            .foregroundColor(.primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
                         HStack(spacing: 12) {
                             HStack {
                                 NavigationLink(destination: SearchView(selectionModel: selectionModel)) {
@@ -123,8 +121,6 @@ struct CategoryView: View {
                                     .frame(width: 30, height: 30)
                                     .foregroundStyle(.gray)
                                     .padding(10)
-                                
-                                
                             }
                         }
                         .sheet(isPresented: $showCamera) {
@@ -148,8 +144,7 @@ struct CategoryView: View {
                                     }
                                 }
                             }
-                            .padding(.horizontal)
-                            .padding(.top, 10)
+
                         }
                         
                         ScrollView(showsIndicators: false) {
@@ -158,83 +153,56 @@ struct CategoryView: View {
                                     foodCardView(food: food, isAdded: selectionModel.selectedFoods.contains(where: { $0.name == food.name })) {
                                         if let index = selectionModel.selectedFoods.firstIndex(where: { $0.name == food.name }) {
                                             selectionModel.selectedFoods.remove(at: index)
-                                            } else {
-                                                selectionModel.selectedFoods.append(food)
-                                            }
-                                        
+                                        } else {
+                                            selectionModel.selectedFoods.append(food)
                                         }
                                     }
-                                
-
+                                }
                             }
                             .padding(.top)
                             .padding(.bottom, 100)
-                            //.shadow(color: colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
-                            .background(.white)
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, 20)
                     .background(Color(.systemBackground))
                     .cornerRadius(30, corners: [.topLeft, .topRight])
-//                    .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(1), radius: 5, x: 0, y: 4)
+                    .ignoresSafeArea(edges: .bottom)
+//                    .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.1), radius: 1, x: 0, y: 0)
                 }
                 
                 HStack {
-                    Text("\(selectionModel.selectedFoods.count) Item")
-                        .font(.body)
-                    Spacer()
-                    NavigationLink(destination: ListView(selectionModel: selectionModel),
-                                   label: {
-                        Text("Hitung")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 10)
-                            .background(selectionModel.selectedFoods.isEmpty ? Color.gray : Color.orange)
-                            .cornerRadius(10)
-                            .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(1), radius: 5, x: 0, y: 4)
-                            .ignoresSafeArea(edges: .bottom)
-                    )}
-                
-                Group {
-                    if !selectionModel.selectedFoods.isEmpty {
-                        HStack {
-                            Spacer()
-                            
-                            NavigationLink(destination: ListView(selectionModel: selectionModel)) {
-                                HStack {
-                                    Text("\(selectionModel.selectedFoods.count) item terpilih")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                }
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.orange)
-                                .cornerRadius(30)
+                    Group {
+                        if !selectionModel.selectedFoods.isEmpty {
+                            HStack {
+                                Spacer()
                                 
+                                NavigationLink(destination: ListView(selectionModel: selectionModel)) {
+                                    HStack {
+                                        Text("\(selectionModel.selectedFoods.count) item terpilih")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.orange)
+                                    .cornerRadius(30)
+                                    
+                                }
+                                
+                                Spacer()
                             }
-                            
-                            Spacer()
+                            .padding(.horizontal, 16)
+                            .background(Color(.systemBackground))
                         }
-                        .padding(.horizontal, 16)
-                        //.padding(.vertical, 12)
-                        .background(Color(.systemBackground))
-                        //.ignoresSafeArea(edges: .bottom)
                     }
+                    
+                    .padding(.horizontal, 16)
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 12)
+                    .padding(.horizontal)
+                    .background(Color(.systemBackground))
                 }
-
-                .padding(.horizontal, 16)
-                //.padding(.vertical, 12)
-                .background(Color(.systemBackground))
-                .ignoresSafeArea(edges: .bottom)
-
-                .frame(maxWidth: .infinity)
-                .padding(.top, 12)
-               // .padding(.bottom,  0)
-                .padding(.horizontal)
-                .background(Color(.systemBackground))
-               // .ignoresSafeArea(edges: .bottom)
             }
             .navigationBarBackButtonHidden(true)
             .onAppear {
