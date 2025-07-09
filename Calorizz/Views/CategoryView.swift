@@ -40,7 +40,6 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
         RoundedRectangle(cornerRadius: 15)
             .stroke(isAdded ? Color.orange : Color.gray.opacity(0.2), lineWidth: 1)
     )
-    
     .padding(.horizontal)
     .overlay(
         RoundedRectangle(cornerRadius: 16)
@@ -111,13 +110,18 @@ struct CategoryView: View {
                             Button {
                                 showCamera = true
                             } label: {
-                                Image(systemName: "camera.viewfinder")
+                                Image(systemName: "viewfinder.circle.fill")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundStyle(.gray)
-                                    .padding(10)
+                                    .frame(width: 45, height: 45)
+                                    .foregroundStyle(.orange)
+//                                    .padding(10)
+//                                Text("Scan")
                             }
+//                            .padding()
+//                            .background(Color.orange)
+//                            .cornerRadius(20)
+//                            .foregroundStyle(.white)
                         }
                         .sheet(isPresented: $showCamera) {
                             ImagePicker(selectedImage: $image)
