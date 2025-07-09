@@ -10,9 +10,22 @@
 		8300FF5D2E0C0DCD00D8C8FC /* Calorizz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calorizz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8F7318872E1EA55E001D0B55 /* Exceptions for "Calorizz" folder in "Calorizz" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8300FF5C2E0C0DCD00D8C8FC /* Calorizz */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8300FF5F2E0C0DCD00D8C8FC /* Calorizz */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8F7318872E1EA55E001D0B55 /* Exceptions for "Calorizz" folder in "Calorizz" target */,
+			);
 			path = Calorizz;
 			sourceTree = "<group>";
 		};
@@ -251,9 +264,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = N7WNP823G2;
+				DEVELOPMENT_TEAM = Q6F58DFBL6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Calorizz/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Kami membutuhkan akses kamera untuk memindai makanan.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -264,7 +279,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.team-3.Calorizz";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ridho.Calorizz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -279,9 +294,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = N7WNP823G2;
+				DEVELOPMENT_TEAM = Q6F58DFBL6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Calorizz/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Kami membutuhkan akses kamera untuk memindai makanan.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -292,7 +309,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.team-3.Calorizz";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ridho.Calorizz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
