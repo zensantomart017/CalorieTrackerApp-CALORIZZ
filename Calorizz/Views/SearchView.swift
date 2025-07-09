@@ -16,24 +16,25 @@ struct SearchView: View {
     @State private var image: UIImage?
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
-
+    
     
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                Color(.systemBackground).ignoresSafeArea()
+                LinearGradient(colors: [.shadedOrange,.shadedYellow], startPoint: .topTrailing, endPoint: .bottomLeading)
+                    .ignoresSafeArea()
                 
                 VStack (spacing: 0) {
                     VStack(spacing: 20) {
                         HStack(spacing: 12) {
                             HStack {
                                 Button(action: {
-                                  
+                                    
                                     dismiss()
                                 }) {
                                     Image(systemName: "arrow.backward")
                                 }
-
+                                
                                 HStack {
                                     TextField("Cari Menu", text: $searchBar)
                                         .foregroundColor(.gray)
@@ -51,7 +52,7 @@ struct SearchView: View {
                             }
                             .padding(.horizontal)
                             .frame(height: 50)
-                            .background(Color(UIColor.secondarySystemBackground))
+                            .background(Color(UIColor.shadedYellow))
                             .cornerRadius(20)
                         }
                         .sheet(isPresented: $showCamera) {
@@ -74,18 +75,18 @@ struct SearchView: View {
                                         }
                                     )
                                 }
-
-
+                                
+                                
                             }
                             .padding(.top)
-//                            .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.5), radius: 2, x: 0, y: 1)
+                            //                            .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.5), radius: 2, x: 0, y: 1)
                         }
                         Spacer(minLength: 80)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, 20)
-                    .background(Color(.systemBackground))
-                   // .shadow(radius: 5)
+                    .background(Color.clear)
+                    // .shadow(radius: 5)
                 }
                 
                 HStack {
@@ -120,7 +121,7 @@ struct SearchView: View {
                     .padding(.horizontal)
                     .background(Color(.systemBackground))
                 }
-            
+                
             }
             .navigationBarBackButtonHidden(true)
         }

@@ -15,7 +15,7 @@ struct WelcomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(colors: [.shadedOrange,.customOrange, .customYellow], startPoint: .topLeading, endPoint: .bottomLeading)
+                LinearGradient(colors: [.shadedOrange,.shadedYellow], startPoint: .topTrailing, endPoint: .bottomLeading)
                     .ignoresSafeArea()
                 
                 VStack (spacing: 20) {
@@ -56,7 +56,7 @@ struct WelcomeView: View {
                             .foregroundColor(.black)
                             .padding(.horizontal, 32)
                             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 3)
-
+                        
                         
                         Button {
                             if !name.isEmpty {

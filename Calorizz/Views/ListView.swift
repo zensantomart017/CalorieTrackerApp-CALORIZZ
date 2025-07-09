@@ -20,11 +20,13 @@ struct ListView: View {
             return sum + food.calories * qty
         }
     }
-
+    
     var body: some View {
+        ZStack {
+            LinearGradient(colors: [.shadedOrange,.shadedYellow], startPoint: .topTrailing, endPoint: .bottomLeading)
+                .ignoresSafeArea()
+            
             VStack{
-                
-                
                 ScrollView {
                     VStack(alignment: .trailing, spacing: 10) {
                         ForEach(selectionModel.selectedFoods) { food in
@@ -49,17 +51,17 @@ struct ListView: View {
                                 )
                             }
                         }
-
+                        
                     }
                 }
                 
                 HStack {
                     Spacer()
-
+                    
                     Text("Total:")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.shadedGreen)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.shadedGreen)
                     
                     Text("\(totalCalories) kkal")
                         .font(.largeTitle)
@@ -67,17 +69,17 @@ struct ListView: View {
                         .foregroundColor(.shadedGreen)
                     
                     
-
+                    
                     Spacer()
                 }
                 .padding()
-//                .background(Color.shadedGreen)
+                //                .background(Color.shadedGreen)
                 .cornerRadius(12)
-//                .shadow(radius: 4)
+                //                .shadow(radius: 4)
                 .padding(.horizontal)
-
+                
             }
-           // .background(Color(.systemBackground))
+            // .background(Color(.systemBackground))
             .navigationTitle("Daftar Makanan")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -88,8 +90,8 @@ struct ListView: View {
                     }
                 }
             }
-
-
+            
+            
             //.navigationBarBackButtonHidden(true)
             
             .alert("Hapus item?", isPresented: $showConfirm) {
@@ -104,15 +106,16 @@ struct ListView: View {
                     Text("Apakah yakin ingin menghapus \"\(food.name)\" dari list makanan?")
                 }
             }
-        
-        .onAppear {
-            if quantities.isEmpty {
-                for food in selectionModel.selectedFoods{
-                    quantities[food.id] = 1 // Default 1 porsi saat tampil
+            
+            .onAppear {
+                if quantities.isEmpty {
+                    for food in selectionModel.selectedFoods{
+                        quantities[food.id] = 1 // Default 1 porsi saat tampil
+                    }
                 }
             }
+            
         }
-        
     }
     
     
@@ -133,7 +136,7 @@ struct ListView: View {
         // Ubah var selectedFoods → @State var selectedFoods
         selectionModel.selectedFoods.removeAll { $0.id == food.id }
     }
-
+    
     
     struct MakananItemView: View {
         let imageName: String
@@ -142,8 +145,8 @@ struct ListView: View {
         let portion: String
         let quantity: Int
         let onMinus: () -> Void
-        let onPlus: () -> Void            
-
+        let onPlus: () -> Void
+        
         
         var body: some View {
             HStack (spacing: 20) {
@@ -169,7 +172,7 @@ struct ListView: View {
                         .font(.subheadline)
                     
                     Text(portion)
-                        .foregroundStyle(.yellow)
+                        .foregroundStyle(.green)
                         .font(.subheadline)
                     
                 }
@@ -182,11 +185,11 @@ struct ListView: View {
                             .foregroundColor(.orange)
                             .padding(13)
                     }
-
+                    
                     Text("\(quantity)")
                         .font(.body)
                         .frame(width: 20)
-
+                    
                     Button(action: onPlus) {
                         Image(systemName: "plus.circle.fill")
                             .foregroundColor(.orange)
@@ -196,7 +199,7 @@ struct ListView: View {
                 .frame(width: 90)
             }
             .padding()
-            .background(Color(.systemBackground))
+            .background(Color(.shadedYellow))
             .cornerRadius(15)
             .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
             .padding(.horizontal)

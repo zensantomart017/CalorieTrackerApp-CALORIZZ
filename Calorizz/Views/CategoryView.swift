@@ -29,8 +29,7 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
             
             Text("\(food.portion)")
                 .font(.subheadline)
-                .foregroundColor(.yellow)
-                
+                .foregroundColor(.green)
         }
         
         Spacer()
@@ -45,7 +44,7 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
         .buttonStyle(PlainButtonStyle())
     }
     .padding()
-    .background(isAdded ? Color.orange.opacity(0.2) : Color(.systemBackground))
+    .background(isAdded ? Color.orange.opacity(0.2) : Color(.shadedYellow))
     .background(isAdded ? Color.customYellow
         .opacity(0.2) : Color(.systemBackground))
     .cornerRadius(15)
@@ -81,9 +80,7 @@ struct CategoryView: View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 LinearGradient(colors: [.shadedOrange,.shadedYellow], startPoint: .topTrailing, endPoint: .bottomLeading)
-                                    .ignoresSafeArea()
-                
-                
+                    .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
                     HStack {
@@ -108,7 +105,7 @@ struct CategoryView: View {
                         .padding(.horizontal)
                     
                     VStack(spacing: 20) {
-                      
+                        
                         HStack(spacing: 12) {
                             HStack {
                                 NavigationLink(destination: SearchView(selectionModel: selectionModel)) {
@@ -120,7 +117,7 @@ struct CategoryView: View {
                                 }}
                             .padding(.horizontal)
                             .frame(height: 50)
-                            .background(Color(.systemGray6))
+                            .background(Color(.shadedYellow))
                             .cornerRadius(20)
                             
                             Button {
@@ -131,13 +128,13 @@ struct CategoryView: View {
                                     .scaledToFit()
                                     .frame(width: 45, height: 45)
                                     .foregroundStyle(.orange)
-//                                    .padding(10)
-//                                Text("Scan")
+                                //                                    .padding(10)
+                                //                                Text("Scan")
                             }
-//                            .padding()
-//                            .background(Color.orange)
-//                            .cornerRadius(20)
-//                            .foregroundStyle(.white)
+                            //                            .padding()
+                            //                            .background(Color.orange)
+                            //                            .cornerRadius(20)
+                            //                            .foregroundStyle(.white)
                         }
                         .sheet(isPresented: $showCamera) {
                             ImagePicker(selectedImage: $image)
@@ -160,7 +157,7 @@ struct CategoryView: View {
                                     }
                                 }
                             }
-
+                            
                         }
                         
                         ScrollView(showsIndicators: false) {
@@ -181,10 +178,10 @@ struct CategoryView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, 20)
-//                    .background(Color(.systemBackground))
-//                    .cornerRadius(30, corners: [.topLeft, .topRight])
-//                    .ignoresSafeArea(edges: .bottom)
-//                    .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.1), radius: 1, x: 0, y: 0)
+                    //                    .background(Color(.systemBackground))
+                    //                    .cornerRadius(30, corners: [.topLeft, .topRight])
+                    //                    .ignoresSafeArea(edges: .bottom)
+                    //                    .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.1), radius: 1, x: 0, y: 0)
                 }
                 
                 HStack {
