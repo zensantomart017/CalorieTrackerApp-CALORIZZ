@@ -123,10 +123,10 @@ struct CategoryView: View {
                             Button {
                                 showCamera = true
                             } label: {
-                                Image(systemName: "viewfinder.circle.fill")
+                                Image(systemName: "camera.circle.fill")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 45, height: 45)
+                                    .frame(width: 50, height: 50)
                                     .foregroundStyle(.orange)
                                 //                                    .padding(10)
                                 //                                Text("Scan")
