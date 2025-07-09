@@ -74,7 +74,7 @@ struct CategoryView: View {
     @State private var navigateToListView = false
     @Environment(\.colorScheme) var colorScheme
 
-    let categoryOrder = ["Nasi", "Lauk", "Sayur", "Buah", "Umbi", "Sambal", "Makanan Olahan", "Camilan", "Hidangan Penutup", "Lainnya"]
+    let categoryOrder = ["Nasi", "Lauk", "Sayur", "Buah", "Umbi", "Sambal", "Makanan olahan", "Camilan", "Hidangan Penutup", "Lainnya"]
 
     var body: some View {
         NavigationStack {
@@ -134,9 +134,7 @@ struct CategoryView: View {
                             ImagePicker(selectedImage: $image)
                         }
                         .onChange(of: image) { newImage in
-                            print("🧪 onChange image terpanggil.")
                             if let img = newImage {
-                                print("✅ Gambar dikirim ke fungsi deteksi.")
                                 detectAndNavigate(from: img)
                             }
                         }
@@ -147,13 +145,14 @@ struct CategoryView: View {
                                 ForEach(categoryOrder.filter { viewModel.uniqueCategories.contains($0) }, id: \.self) { category in
                                     Button(action: {
                                         selectedCategory = category
+                                        print("📂 Kategori dipilih: \(category)")
                                     }) {
-                                        Text(category)
-                                            .padding(.vertical, 8)
-                                            .padding(.horizontal, 16)
-                                            .background(selectedCategory == category ? Color.orange : Color.gray.opacity(0.1))
-                                            .foregroundColor(.black)
-                                            .cornerRadius(12)
+                                        KategoriItem(
+                                            title: category,
+                                            imageName: imageNameForCategory(category),
+                                            backgroundColor: colorForCategory(category),
+                                            isSelected: selectedCategory == category
+                                        )
                                     }
                                 }
                             }
@@ -163,11 +162,16 @@ struct CategoryView: View {
                         ScrollView(showsIndicators: false) {
                             VStack(spacing: 12) {
                                 ForEach(viewModel.foods(for: selectedCategory)) { food in
-                                    foodCardView(food: food, isAdded: selectionModel.selectedFoods.contains(where: { $0.name == food.name })) {
+                                    foodCardView(
+                                        food: food,
+                                        isAdded: selectionModel.selectedFoods.contains(where: { $0.name == food.name })
+                                    ) {
                                         if let index = selectionModel.selectedFoods.firstIndex(where: { $0.name == food.name }) {
                                             selectionModel.selectedFoods.remove(at: index)
+                                            print("🗑️ Dihapus dari pilihan: \(food.name)")
                                         } else {
                                             selectionModel.selectedFoods.append(food)
+                                            print("✅ Ditambahkan ke pilihan: \(food.name)")
                                         }
                                     }
                                 }
@@ -210,41 +214,62 @@ struct CategoryView: View {
             .navigationBarBackButtonHidden(true)
             .onAppear {
                 viewModel.loadAllFoods()
+                print("📦 Data makanan dimuat.")
             }
         }
     }
 
-    // ✅ Perbaikan: tempatkan detectAndNavigate DI DALAM struct CategoryView
+    // MARK: - Debug & Helper Functions
     private func detectAndNavigate(from image: UIImage) {
         print("📷 [1] Fungsi detectAndNavigate dipanggil.")
-        print("✅ [2] Berhasil konversi UIImage ke CGImage.")
-        print("✅ [3] Model CoreML berhasil dimuat.")
-        print("🚀 [4] Memulai deteksi via DetectionManager.")
-
         DetectionManager.shared.detectLabels(from: image) { labels in
+            print("🔍 [2] Label terdeteksi: \(labels)")
             DispatchQueue.main.async {
-                print("📥 [5] Callback deteksi dijalankan.")
-                print("📊 [6] Label terdeteksi: \(labels)")
-
                 let matched = viewModel.matchDetectedLabels(labels)
-                print("📦 [7] Makanan yang cocok ditemukan: \(matched.map { $0.0.name })")
-
                 for (food, _) in matched {
                     if !selectionModel.selectedFoods.contains(where: { $0.id == food.id }) {
                         selectionModel.selectedFoods.append(food)
-                        print("✅ [8] Menambahkan makanan: \(food.name)")
-                    } else {
-                        print("ℹ️ [8] \(food.name) sudah ada di daftar.")
+                        print("🍽️ Otomatis ditambahkan: \(food.name)")
                     }
                 }
-
                 if !matched.isEmpty {
-                    print("✅ [9] Navigasi otomatis ke ListView dimulai.")
                     navigateToListView = true
+                    print("➡️ Navigasi ke ListView karena hasil deteksi ditemukan.")
                 } else {
-                    print("⚠️ [9] Tidak ada makanan cocok. Navigasi dibatalkan.")
+                    print("⚠️ Tidak ada kecocokan ditemukan.")
                 }
             }
+        }
+    }
+
+    private func imageNameForCategory(_ category: String) -> String {
+        switch category {
+        case "Nasi": return "nasi"
+        case "Lauk": return "lauk"
+        case "Sayur": return "sayur"
+        case "Buah": return "buah"
+        case "Umbi": return "umbi"
+        case "Sambal": return "sambal"
+        case "Makanan olahan": return "makananolahan"
+        case "Camilan": return "camilan"
+        case "Hidangan Penutup": return "hidanganPenutup"
+        case "Lainnya": return "lainnya"
+        default: return "photo"
+        }
+    }
+
+    private func colorForCategory(_ category: String) -> Color {
+        switch category {
+        case "Nasi": return .customOrange
+        case "Lauk": return .customYellow
+        case "Sayur": return .customGreen
+        case "Buah": return .mint
+        case "Umbi": return .pink
+        case "Sambal": return .red
+        case "Makanan olahan": return .teal
+        case "Camilan": return .purple
+        case "Hidangan Penutup": return .cyan
+        default: return .gray
         }
     }
 }
