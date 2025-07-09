@@ -30,28 +30,27 @@ struct ListView: View {
                 ScrollView {
                     VStack(alignment: .trailing, spacing: 10) {
                         ForEach(selectionModel.selectedFoods) { food in
-                            if let qty = quantities[food.id] {
-                                MakananItemView(
-                                    imageName: imageName(for: food.name),
-                                    title: food.name,
-                                    calories: "\(food.calories) kkal",
-                                    portion: "\(food.portion)",
-                                    quantity: qty,
-                                    onMinus: {
-                                        if qty > 1 {
-                                            quantities[food.id]! -= 1
-                                        } else {
-                                            pendingDelete = food
-                                            showConfirm = true
-                                        }
-                                    },
-                                    onPlus: {
-                                        quantities[food.id, default: 0] += 1
+                            let qty = quantities[food.id] ?? 1
+                            
+                            MakananItemView(
+                                imageName: food.imageName,
+                                title: food.name,
+                                calories: "\(food.calories) kkal",
+                                portion: food.portion,
+                                quantity: qty,
+                                onMinus: {
+                                    if qty > 1 {
+                                        quantities[food.id, default: 1] -= 1
+                                    } else {
+                                        pendingDelete = food
+                                        showConfirm = true
                                     }
-                                )
-                            }
+                                },
+                                onPlus: {
+                                    quantities[food.id, default: 1] += 1
+                                }
+                            )
                         }
-                        
                     }
                 }
                 
@@ -59,40 +58,30 @@ struct ListView: View {
                     Spacer()
                     
                     Text("Total:")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+                        .font(.title2.bold())
                         .foregroundColor(.shadedGreen)
                     
                     Text("\(totalCalories) kkal")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+                        .font(.title2.bold())
                         .foregroundColor(.shadedGreen)
-                    
-                    
-                    
                     Spacer()
                 }
                 .padding()
-                //                .background(Color.shadedGreen)
+                .background(Color.white.opacity(0.1))
                 .cornerRadius(12)
-                //                .shadow(radius: 4)
                 .padding(.horizontal)
                 
             }
-            // .background(Color(.systemBackground))
             .navigationTitle("Daftar Makanan")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(destination: CategoryView(selectionModel: FoodSelectionModel())) {
+                    NavigationLink(destination: CategoryView(selectionModel: selectionModel)) {
                         Text("Selesai")
-                            .foregroundStyle(.primary)
+                            .foregroundStyle(.blue)
                             .font(.title3)
                     }
                 }
             }
-            
-            
-            //.navigationBarBackButtonHidden(true)
             
             .alert("Hapus item?", isPresented: $showConfirm) {
                 Button("Ya", role: .destructive) {
@@ -108,24 +97,13 @@ struct ListView: View {
             }
             
             .onAppear {
-                if quantities.isEmpty {
-                    for food in selectionModel.selectedFoods{
-                        quantities[food.id] = 1 // Default 1 porsi saat tampil
+                for food in selectionModel.selectedFoods {
+                    if quantities[food.id] == nil {
+                        quantities[food.id] = 1
                     }
                 }
             }
             
-        }
-    }
-    
-    
-    func imageName(for name: String) -> String {
-        switch name {
-        case "Ayam Betutu": return "ayambetutu"
-        case "Sayur Asem": return "sayurasem"
-        case "Ikan Jahir Goreng": return "jahirgoreng"
-        case "Nasi Putih": return "nasi"
-        default: return "photo"
         }
     }
     
@@ -136,74 +114,73 @@ struct ListView: View {
         // Ubah var selectedFoods → @State var selectedFoods
         selectionModel.selectedFoods.removeAll { $0.id == food.id }
     }
+}
+
+struct MakananItemView: View {
+    let imageName: String
+    let title: String
+    let calories: String
+    let portion: String
+    let quantity: Int
+    let onMinus: () -> Void
+    let onPlus: () -> Void
     
     
-    struct MakananItemView: View {
-        let imageName: String
-        let title: String
-        let calories: String
-        let portion: String
-        let quantity: Int
-        let onMinus: () -> Void
-        let onPlus: () -> Void
-        
-        
-        var body: some View {
-            HStack (spacing: 20) {
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 70, height: 70)
-                    .clipped()
-                    .cornerRadius(12)
+    var body: some View {
+        HStack (spacing: 20) {
+            Image(imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 70, height: 70)
+                .clipped()
+                .cornerRadius(12)
+            
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.headline)
+                    .foregroundStyle(.black)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
                 
                 
-                VStack(alignment: .leading) {
-                    Text(title)
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
-                        .layoutPriority(1)
-                    
-                    
-                    Text(calories)
-                        .foregroundStyle(.shadedGreen)
-                        .font(.subheadline)
-                    
-                    Text(portion)
-                        .foregroundStyle(.green)
-                        .font(.subheadline)
-                    
-                }
+                Text(calories)
+                    .foregroundStyle(.shadedGreen)
+                    .font(.subheadline)
                 
-                Spacer()
+                Text(portion)
+                    .foregroundStyle(.green)
+                    .font(.subheadline)
                 
-                HStack(spacing: 1) {
-                    Button(action: onMinus) {
-                        Image(systemName: "minus.circle.fill")
-                            .foregroundColor(.orange)
-                            .padding(13)
-                    }
-                    
-                    Text("\(quantity)")
-                        .font(.body)
-                        .frame(width: 20)
-                    
-                    Button(action: onPlus) {
-                        Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.orange)
-                            .padding(.horizontal)
-                    }
-                }
-                .frame(width: 90)
             }
-            .padding()
-            .background(Color(.shadedYellow))
-            .cornerRadius(15)
-            .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
-            .padding(.horizontal)
+            
+            Spacer()
+            
+            HStack(spacing: 1) {
+                Button(action: onMinus) {
+                    Image(systemName: "minus.circle.fill")
+                        .foregroundColor(.orange)
+                        .padding(13)
+                }
+                
+                Text("\(quantity)")
+                    .font(.body)
+                    .frame(width: 20)
+                    .foregroundColor(.black)
+                
+                Button(action: onPlus) {
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.orange)
+                        .padding(.horizontal)
+                }
+            }
+            .frame(width: 90)
         }
+        .padding()
+        .background(Color(.shadedYellow))
+        .cornerRadius(15)
+        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+        .padding(.horizontal)
     }
 }
 

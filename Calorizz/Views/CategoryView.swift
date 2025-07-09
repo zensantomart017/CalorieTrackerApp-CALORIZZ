@@ -1,3 +1,10 @@
+//
+//  WelcomeView.swift
+//  Calorizz
+//
+//  Created by Foundation-023 on 09/07/25.
+//
+
 import SwiftUI
 
 func foodCardView(food: FoodItem, isAdded: Bool, onAdd: @escaping () -> Void) -> some View {
@@ -10,7 +17,7 @@ func foodCardView(food: FoodItem, isAdded: Bool, onAdd: @escaping () -> Void) ->
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .shadow(radius: 10)
         } else {
-            Image(systemName: "photo")
+            Image(systemName: "fork.knife.circle.fill")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 50, height: 50)
@@ -21,7 +28,7 @@ func foodCardView(food: FoodItem, isAdded: Bool, onAdd: @escaping () -> Void) ->
             Text(food.name)
                 .font(.headline)
                 .foregroundStyle(.black)
-
+            
             Text("\(food.calories) Kkal")
                 .font(.subheadline)
                 .foregroundColor(.green)
@@ -45,6 +52,9 @@ func foodCardView(food: FoodItem, isAdded: Bool, onAdd: @escaping () -> Void) ->
     .padding()
     .background(isAdded ? Color.orange.opacity(0.2) : Color(.cardcolor))
     .background(isAdded ? Color.customYellow.opacity(0.2) : Color(.systemBackground))
+    .background(isAdded ? Color.orange.opacity(0.2) : Color(.shadedYellow))
+    .background(isAdded ? Color.customYellow.opacity(0.2) : Color(.systemBackground))
+    //    .background(RoundedRectangle(cornerRadius: 15).fill(Color(uiColor:.secondarySystemBackground)))
     .cornerRadius(15)
     .padding(.horizontal, 20)
     .overlay(
@@ -187,11 +197,34 @@ struct CategoryView: View {
                             .padding()
                             .background(Color.orange)
                             .cornerRadius(30)
+                                Spacer()
+                                
+                                NavigationLink(destination: ListView(selectionModel: selectionModel)) {
+                                    HStack {
+                                        Text("\(selectionModel.selectedFoods.count) item terpilih")
+                                            .font(.headline)
+                                            .foregroundColor(.black)
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.orange)
+                                    .cornerRadius(30)
+                                    
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding(.horizontal, 16)
+                            .background(Color.clear)
                         }
                         Spacer()
                     }
                     .padding(.horizontal, 16)
                     .background(Color(.systemBackground))
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 12)
+                    .padding(.horizontal)
+                    .background(LinearGradient(colors: [.shadedOrange,.shadedYellow], startPoint: .topTrailing, endPoint: .bottomLeading))
                 }
             }
             .navigationBarBackButtonHidden(true)
