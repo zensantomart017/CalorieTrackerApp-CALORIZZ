@@ -221,7 +221,6 @@ struct CategoryView: View {
         }
     }
 
-    // MARK: - Debug & Helper Functions
     private func detectAndNavigate(from image: UIImage) {
         print("📷 [1] Fungsi detectAndNavigate dipanggil.")
         DetectionManager.shared.detectLabels(from: image) { labels in

@@ -31,7 +31,7 @@ struct KategoriItem: View {
                 .foregroundColor(.black)
         }
         .padding()
-        .frame(width: 100)
+        .frame(width: 110, height: 150)
         .background(backgroundColor.opacity(isSelected ? 1.0 : 0.5))
         .cornerRadius(20)
     }

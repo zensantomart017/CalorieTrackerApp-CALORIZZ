@@ -109,16 +109,16 @@ struct SearchView: View {
                                 
                                 Spacer()
                             }
-                            .padding(.horizontal, 16)
-                            .background(Color(.systemBackground))
+//                            .padding(.horizontal, 16)
+//                            .background(Color(.systemBackground))
                         }
                     }
                     
-                    .padding(.horizontal, 16)
-                    .frame(maxWidth: .infinity)
-                    .padding(.top, 12)
-                    .padding(.horizontal)
-                    .background(Color(.systemBackground))
+//                    .padding(.horizontal, 16)
+//                    .frame(maxWidth: .infinity)
+//                    .padding(.top, 12)
+//                    .padding(.horizontal)
+//                    .background(Color(.systemBackground))
                 }
                 
             }
