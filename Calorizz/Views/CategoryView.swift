@@ -28,7 +28,7 @@ func foodCardView(food: FoodItem, isAdded: Bool, onAdd: @escaping () -> Void) ->
             Text(food.name)
                 .font(.headline)
                 .foregroundStyle(.black)
-            
+
             Text("\(food.calories) Kkal")
                 .font(.subheadline)
                 .foregroundColor(.green)
@@ -51,16 +51,11 @@ func foodCardView(food: FoodItem, isAdded: Bool, onAdd: @escaping () -> Void) ->
     }
     .padding()
     .background(isAdded ? Color.orange.opacity(0.2) : Color(.cardcolor))
-    .background(isAdded ? Color.customYellow.opacity(0.2) : Color(.systemBackground))
-    .background(isAdded ? Color.orange.opacity(0.2) : Color(.shadedYellow))
-    .background(isAdded ? Color.customYellow.opacity(0.2) : Color(.systemBackground))
-    //    .background(RoundedRectangle(cornerRadius: 15).fill(Color(uiColor:.secondarySystemBackground)))
     .cornerRadius(15)
-    .padding(.horizontal, 20)
+    .padding(.horizontal, 25)
     .overlay(
         RoundedRectangle(cornerRadius: 16)
             .stroke(Color.gray.opacity(0.2), lineWidth: 0.5)
-            .padding(.horizontal, 25)
     )
 }
 
@@ -197,59 +192,35 @@ struct CategoryView: View {
                             .padding()
                             .background(Color.orange)
                             .cornerRadius(30)
-                                Spacer()
-                                
-                                NavigationLink(destination: ListView(selectionModel: selectionModel)) {
-                                    HStack {
-                                        Text("\(selectionModel.selectedFoods.count) item terpilih")
-                                            .font(.headline)
-                                            .foregroundColor(.black)
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(Color.orange)
-                                    .cornerRadius(30)
-                                    
-                                }
-                                
-                                Spacer()
-                            }
-                            .padding(.horizontal, 16)
-                            .background(Color.clear)
                         }
                         Spacer()
                     }
                     .padding(.horizontal, 16)
-                    .background(Color(.systemBackground))
-                    .frame(maxWidth: .infinity)
                     .padding(.top, 12)
-                    .padding(.horizontal)
-                    .background(LinearGradient(colors: [.shadedOrange,.shadedYellow], startPoint: .topTrailing, endPoint: .bottomLeading))
                 }
+
+                NavigationLink(
+                    destination: ListView(selectionModel: selectionModel),
+                    isActive: $navigateToListView
+                ) {
+                    EmptyView()
+                }
+                .hidden()
             }
             .navigationBarBackButtonHidden(true)
             .onAppear {
                 viewModel.loadAllFoods()
             }
-
-            // ✅ Auto NavigationLink (triggered after detection)
-            NavigationLink(
-                destination: ListView(selectionModel: selectionModel),
-                isActive: $navigateToListView
-            ) {
-                EmptyView()
-            }
-            .hidden()
         }
     }
 
+    // ✅ Perbaikan: tempatkan detectAndNavigate DI DALAM struct CategoryView
     private func detectAndNavigate(from image: UIImage) {
         print("📷 [1] Fungsi detectAndNavigate dipanggil.")
-
         print("✅ [2] Berhasil konversi UIImage ke CGImage.")
         print("✅ [3] Model CoreML berhasil dimuat.")
-
         print("🚀 [4] Memulai deteksi via DetectionManager.")
+
         DetectionManager.shared.detectLabels(from: image) { labels in
             DispatchQueue.main.async {
                 print("📥 [5] Callback deteksi dijalankan.")
