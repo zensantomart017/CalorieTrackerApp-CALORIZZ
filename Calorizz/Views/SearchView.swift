@@ -79,7 +79,6 @@ struct SearchView: View {
                                 
                             }
                             .padding(.top)
-                            //                            .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.5), radius: 2, x: 0, y: 1)
                         }
                         Spacer(minLength: 80)
                     }

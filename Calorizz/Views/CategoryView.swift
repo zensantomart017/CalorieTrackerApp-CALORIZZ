@@ -185,7 +185,9 @@ struct CategoryView: View {
 
                 if !selectionModel.selectedFoods.isEmpty {
                     HStack {
+                        
                         Spacer()
+                        
                         NavigationLink(destination: ListView(selectionModel: selectionModel)) {
                             HStack {
                                 Text("\(selectionModel.selectedFoods.count) item terpilih")
