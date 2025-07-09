@@ -23,6 +23,8 @@ struct ListView: View {
 
     var body: some View {
             VStack{
+                
+                
                 ScrollView {
                     VStack(alignment: .trailing, spacing: 10) {
                         ForEach(selectionModel.selectedFoods) { food in
@@ -31,6 +33,7 @@ struct ListView: View {
                                     imageName: imageName(for: food.name),
                                     title: food.name,
                                     calories: "\(food.calories) kkal",
+                                    portion: "\(food.portion)",
                                     quantity: qty,
                                     onMinus: {
                                         if qty > 1 {
@@ -62,6 +65,8 @@ struct ListView: View {
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.shadedGreen)
+                    
+                    
 
                     Spacer()
                 }
@@ -72,7 +77,7 @@ struct ListView: View {
                 .padding(.horizontal)
 
             }
-            .background(Color(.systemBackground))
+           // .background(Color(.systemBackground))
             .navigationTitle("Daftar Makanan")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -107,8 +112,9 @@ struct ListView: View {
                 }
             }
         }
-
+        
     }
+    
     
     func imageName(for name: String) -> String {
         switch name {
@@ -133,6 +139,7 @@ struct ListView: View {
         let imageName: String
         let title: String
         let calories: String
+        let portion: String
         let quantity: Int
         let onMinus: () -> Void
         let onPlus: () -> Void            
@@ -160,6 +167,11 @@ struct ListView: View {
                     Text(calories)
                         .foregroundStyle(.shadedGreen)
                         .font(.subheadline)
+                    
+                    Text(portion)
+                        .foregroundStyle(.yellow)
+                        .font(.subheadline)
+                    
                 }
                 
                 Spacer()

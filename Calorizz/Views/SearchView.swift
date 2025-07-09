@@ -89,25 +89,38 @@ struct SearchView: View {
                 }
                 
                 HStack {
-                    Text("\(selectionModel.selectedFoods.count) Item")
-                        .font(.body)
-                    Spacer()
-                    NavigationLink(destination: ListView(selectionModel: selectionModel)) {
-                        Text("Hitung")
-                            .font(.headline)
-                            .foregroundColor(Color(.systemBackground))
+                    Group {
+                        if !selectionModel.selectedFoods.isEmpty {
+                            HStack {
+                                Spacer()
+                                
+                                NavigationLink(destination: ListView(selectionModel: selectionModel)) {
+                                    HStack {
+                                        Text("\(selectionModel.selectedFoods.count) item terpilih")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.orange)
+                                    .cornerRadius(30)
+                                    
+                                }
+                                
+                                Spacer()
+                            }
                             .padding(.horizontal, 16)
-                            .padding(.vertical, 10)
-                            .background(.shadedGreen)
-                            .cornerRadius(10)
+                            .background(Color(.systemBackground))
+                        }
                     }
+                    
+                    .padding(.horizontal, 16)
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 12)
+                    .padding(.horizontal)
+                    .background(Color(.systemBackground))
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.top, 12)
-                .padding(.bottom, 30)
-                .padding(.horizontal)
-                .background(Color(.systemBackground))
-                .ignoresSafeArea(edges: .bottom)
+            
             }
             .navigationBarBackButtonHidden(true)
         }

@@ -18,6 +18,11 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
             Text("\(food.calories) Kkal")
                 .font(.subheadline)
                 .foregroundColor(.green)
+            
+            Text("\(food.portion)")
+                .font(.subheadline)
+                .foregroundColor(.yellow)
+                
         }
         
         Spacer()
@@ -67,7 +72,10 @@ struct CategoryView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                Color(.systemBackground).ignoresSafeArea()
+                LinearGradient(colors: [.shadedOrange,.shadedYellow], startPoint: .topTrailing, endPoint: .bottomLeading)
+                                    .ignoresSafeArea()
+                
+                
                 
                 VStack(spacing: 0) {
                     HStack {
@@ -82,7 +90,7 @@ struct CategoryView: View {
                             .padding(.horizontal)
                     }
                     .padding(.horizontal)
-                    .padding(.top, 40)
+                    .padding(.top, 10)
                     .padding(.bottom, 16)
                     
                     Text("Cek kalori makananmu dulu yuk!")
@@ -165,9 +173,9 @@ struct CategoryView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.top, 20)
-                    .background(Color(.systemBackground))
-                    .cornerRadius(30, corners: [.topLeft, .topRight])
-                    .ignoresSafeArea(edges: .bottom)
+//                    .background(Color(.systemBackground))
+//                    .cornerRadius(30, corners: [.topLeft, .topRight])
+//                    .ignoresSafeArea(edges: .bottom)
 //                    .shadow(color: colorScheme == .dark ? Color.white.opacity(1) : Color.black.opacity(0.1), radius: 1, x: 0, y: 0)
                 }
                 
