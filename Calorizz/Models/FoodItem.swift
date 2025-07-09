@@ -9,6 +9,7 @@ import Foundation
 
 struct FoodItem: Identifiable, Codable, Equatable {
     let id = UUID()
+    let imageName: String
     let name: String
     let calories: Int
     let category: String
@@ -16,6 +17,7 @@ struct FoodItem: Identifiable, Codable, Equatable {
     
     enum CodingKeys: String, CodingKey {
         case name
+        case imageName
         case calories
         case category
         case portion

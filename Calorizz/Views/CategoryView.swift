@@ -3,12 +3,20 @@ import SwiftUI
 func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> some View {
     HStack(alignment: .center, spacing: 16) {
         
-        Image("photo")
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 50, height: 50)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius: 10)
+        if let uiImage = UIImage(named: food.imageName) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 50, height: 50)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .shadow(radius: 10)
+        } else {
+            Image(systemName: "photo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 50, height: 50)
+                .foregroundColor(.gray)
+        }
         
         VStack(alignment: .leading, spacing: 4) {
             Text(food.name)
