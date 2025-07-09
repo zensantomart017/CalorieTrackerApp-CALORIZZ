@@ -44,19 +44,16 @@ func foodCardView(food: FoodItem, isAdded: Bool,onAdd: @escaping () -> Void) -> 
         .buttonStyle(PlainButtonStyle())
     }
     .padding()
-    .background(isAdded ? Color.orange.opacity(0.2) : Color(.shadedYellow))
+    .background(isAdded ? Color.orange.opacity(0.2) : Color(.cardcolor))
     .background(isAdded ? Color.customYellow
         .opacity(0.2) : Color(.systemBackground))
     .cornerRadius(15)
-    .overlay(
-        RoundedRectangle(cornerRadius: 15)
-            .stroke(isAdded ? Color.orange : Color.gray.opacity(0.2), lineWidth: 1)
-    )
-    .padding(.horizontal)
+   
+    .padding(.horizontal,20)
     .overlay(
         RoundedRectangle(cornerRadius: 16)
             .stroke(Color.gray.opacity(0.2), lineWidth: 0.5)
-            .padding(.horizontal)
+            .padding(.horizontal, 25)
     )
 }
 
@@ -79,7 +76,7 @@ struct CategoryView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                LinearGradient(colors: [.shadedOrange,.shadedYellow], startPoint: .topTrailing, endPoint: .bottomLeading)
+                LinearGradient(colors: [.gradasi1,.gradasi2, .gradasi3,.gradasi4], startPoint: .topTrailing, endPoint: .bottomLeading)
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
@@ -94,7 +91,7 @@ struct CategoryView: View {
                             .frame(height: 40)
                             .padding(.horizontal)
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, 25)
                     .padding(.top, 10)
                     .padding(.bottom, 16)
                     
@@ -102,7 +99,7 @@ struct CategoryView: View {
                         .font(.body)
                         .foregroundColor(.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
+                        .padding(.horizontal, 25)
                     
                     VStack(spacing: 20) {
                         
@@ -115,9 +112,9 @@ struct CategoryView: View {
                                         .foregroundColor(.gray)
                                     Spacer()
                                 }}
-                            .padding(.horizontal)
+                            .padding(.horizontal, 25)
                             .frame(height: 50)
-                            .background(Color(.shadedYellow))
+                            .background(Color(.cardcolor))
                             .cornerRadius(20)
                             
                             Button {
@@ -139,7 +136,7 @@ struct CategoryView: View {
                         .sheet(isPresented: $showCamera) {
                             ImagePicker(selectedImage: $image)
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 25)
                         
                         
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -157,7 +154,7 @@ struct CategoryView: View {
                                     }
                                 }
                             }
-                            
+                            .padding(.horizontal, 25)
                         }
                         
                         ScrollView(showsIndicators: false) {
@@ -172,7 +169,7 @@ struct CategoryView: View {
                                     }
                                 }
                             }
-                            .padding(.top)
+//                            .padding(.top)
                             .padding(.bottom, 100)
                         }
                     }
