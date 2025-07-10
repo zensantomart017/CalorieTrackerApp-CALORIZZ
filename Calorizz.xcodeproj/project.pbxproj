@@ -20,11 +20,22 @@
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		8319C42B2E1FC47900FF0111 /* Exceptions for "Calorizz" folder in "Copy Bundle Resources" phase from "Calorizz" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 8300FF5B2E0C0DCD00D8C8FC /* Resources */;
+			membershipExceptions = (
+				ML/FoodDetection1.mlmodel,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8300FF5F2E0C0DCD00D8C8FC /* Calorizz */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				F36D413E2E1F9AD300117BB7 /* Exceptions for "Calorizz" folder in "Calorizz" target */,
+				8319C42B2E1FC47900FF0111 /* Exceptions for "Calorizz" folder in "Copy Bundle Resources" phase from "Calorizz" target */,
 			);
 			path = Calorizz;
 			sourceTree = "<group>";
