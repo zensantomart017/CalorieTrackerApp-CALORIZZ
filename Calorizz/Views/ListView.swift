@@ -205,7 +205,7 @@ struct MakananItemView: View {
                 
                 Text("\(quantity)")
                     .font(.body)
-                    .frame(width: 20)
+                    .frame(width: 40, alignment: .center)
                     .foregroundColor(.black)
                 
                 Button(action: onPlus) {
@@ -214,7 +214,7 @@ struct MakananItemView: View {
                         .padding(.horizontal)
                 }
             }
-            .frame(width: 90)
+            .frame(width: 100)
         }
         .padding()
         .background(Color(.cardcolor))
