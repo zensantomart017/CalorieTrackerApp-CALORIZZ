@@ -23,7 +23,7 @@ struct ListView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.shadedOrange,.shadedYellow], startPoint: .topTrailing, endPoint: .bottomLeading)
+            LinearGradient(colors: [.gradasi1, .gradasi2, .gradasi3,.gradasi3, .gradasi4,.gradasi4], startPoint: .topTrailing, endPoint: .bottomLeading)
                 .ignoresSafeArea()
             
             VStack{

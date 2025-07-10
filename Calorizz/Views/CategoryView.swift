@@ -79,7 +79,7 @@ struct CategoryView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                LinearGradient(colors: [.gradasi1, .gradasi2, .gradasi3, .gradasi4], startPoint: .topTrailing, endPoint: .bottomLeading)
+                LinearGradient(colors: [.gradasi1, .gradasi2, .gradasi3,.gradasi3, .gradasi4,.gradasi4], startPoint: .topTrailing, endPoint: .bottomLeading)
                     .ignoresSafeArea()
 
                 VStack(spacing: 0) {
@@ -261,16 +261,16 @@ struct CategoryView: View {
 
     private func colorForCategory(_ category: String) -> Color {
         switch category {
-        case "Nasi": return .customOrange
-        case "Lauk": return .customYellow
+        case "Nasi": return .tintedOrange
+        case "Lauk": return .shadedYellow
         case "Sayur": return .customGreen
-        case "Buah": return .mint
-        case "Umbi": return .pink
-        case "Sambal": return .red
-        case "Makanan olahan": return .teal
-        case "Camilan": return .purple
-        case "Hidangan Penutup": return .cyan
-        default: return .gray
+        case "Buah": return .tintedOrange
+        case "Umbi": return .shadedYellow
+        case "Sambal": return .customGreen
+        case "Makanan olahan": return .tintedOrange
+        case "Camilan": return .shadedYellow
+        case "Hidangan Penutup": return .customGreen
+        default: return .tintedOrange
         }
     }
 }

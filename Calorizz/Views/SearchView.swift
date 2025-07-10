@@ -21,7 +21,7 @@ struct SearchView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                LinearGradient(colors: [.shadedOrange,.shadedYellow], startPoint: .topTrailing, endPoint: .bottomLeading)
+                LinearGradient(colors: [.gradasi1, .gradasi2, .gradasi3,.gradasi3, .gradasi4,.gradasi4], startPoint: .topTrailing, endPoint: .bottomLeading)
                     .ignoresSafeArea()
                 
                 VStack (spacing: 0) {
@@ -52,7 +52,7 @@ struct SearchView: View {
                             }
                             .padding(.horizontal)
                             .frame(height: 50)
-                            .background(Color(UIColor.shadedYellow))
+                            .background(Color(UIColor.cardcolor))
                             .cornerRadius(20)
                         }
                         .sheet(isPresented: $showCamera) {
