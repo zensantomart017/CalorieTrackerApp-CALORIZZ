@@ -49,14 +49,14 @@ func foodCardView(food: FoodItem, isAdded: Bool, onAdd: @escaping () -> Void) ->
         }
         .buttonStyle(PlainButtonStyle())
     }
-    .padding()
+    .padding(15)
     .background(isAdded ? Color.orange.opacity(0.2) : Color(.cardcolor))
     .cornerRadius(15)
-    .padding(.horizontal, 25)
     .overlay(
         RoundedRectangle(cornerRadius: 16)
             .stroke(Color.gray.opacity(0.2), lineWidth: 0.5)
     )
+    .padding(.horizontal, 20)
 }
 
 class FoodSelectionModel: ObservableObject {
@@ -94,7 +94,7 @@ struct CategoryView: View {
                             .frame(height: 40)
                             .padding(.horizontal)
                     }
-                    .padding(.horizontal, 25)
+                    .padding(.horizontal, 20)
                     .padding(.top, 10)
                     .padding(.bottom, 16)
 
@@ -102,7 +102,7 @@ struct CategoryView: View {
                         .font(.body)
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 25)
+                        .padding(.horizontal, 20)
 
                     VStack(spacing: 20) {
                         HStack(spacing: 12) {
@@ -138,7 +138,7 @@ struct CategoryView: View {
                                 detectAndNavigate(from: img)
                             }
                         }
-                        .padding(.horizontal, 25)
+                        .padding(.horizontal, 20)
 
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 15) {
@@ -156,7 +156,7 @@ struct CategoryView: View {
                                     }
                                 }
                             }
-                            .padding(.horizontal, 25)
+                            .padding(.horizontal, 20)
                         }
 
                         ScrollView(showsIndicators: false) {
