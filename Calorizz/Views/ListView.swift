@@ -37,6 +37,8 @@ struct ListView: View {
     @State private var showConfirm = false
     @State private var pendingDelete: FoodItem?
     @ObservedObject var selectionModel: FoodSelectionModel
+    @Environment(\.dismiss) private var dismiss
+
     
     var totalCalories: Int {
         selectionModel.selectedFoods.reduce(0) { sum, food in
@@ -101,8 +103,8 @@ struct ListView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: CategoryView(selectionModel: FoodSelectionModel())) {
                         Text("Selesai")
-                            .foregroundStyle(.blue)
-                            .font(.title3)
+                            .foregroundStyle(.black)
+                            .font(.body)
                     }
                 }
             }
@@ -124,7 +126,16 @@ struct ListView: View {
                         selectionModel.quantities[food.id] = 1
                     }
                 }
+                
             }
+            .onChange(of: selectionModel.selectedFoods) { newList in
+                if newList.isEmpty {
+                    dismiss()
+                }
+            }
+            .tint(.black)
+
+
         }
     }
     

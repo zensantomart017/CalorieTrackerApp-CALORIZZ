@@ -194,11 +194,15 @@ struct CategoryView: View {
                             .padding()
                             .background(Color.orange)
                             .cornerRadius(30)
+                            .tint(.black)
+
                         }
                         Spacer()
+                        
                     }
                     .padding(.horizontal, 16)
                     .padding(.top, 12)
+                    
                 }
 
                 NavigationLink(
@@ -215,6 +219,8 @@ struct CategoryView: View {
                 print("📦 Data makanan dimuat.")
             }
         }
+        .tint(.black)
+
     }
 
     private func detectAndNavigate(from image: UIImage) {

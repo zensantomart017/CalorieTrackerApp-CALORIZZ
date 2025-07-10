@@ -33,6 +33,8 @@ struct SearchView: View {
                                     dismiss()
                                 }) {
                                     Image(systemName: "arrow.backward")
+                                        .foregroundColor(.black)
+
                                 }
                                 
                                 HStack {
@@ -48,6 +50,8 @@ struct SearchView: View {
                                     } label: {
                                         Image(systemName: "magnifyingglass")
                                             .font(.title2)
+                                            .foregroundColor(.black)
+
                                     }
                                 }
                                 .padding()
