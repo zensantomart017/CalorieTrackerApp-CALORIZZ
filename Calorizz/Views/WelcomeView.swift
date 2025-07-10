@@ -56,6 +56,8 @@ struct WelcomeView: View {
                             .foregroundColor(.black)
                             .padding(.horizontal, 32)
                             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 3)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled(true)
                         
                         
                         Button {

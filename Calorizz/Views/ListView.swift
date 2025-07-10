@@ -7,6 +7,31 @@
 
 import SwiftUI
 
+func portionMultiplied(portion: String, quantity: Int) -> String {
+    let trimmed = portion.trimmingCharacters(in: .whitespaces)
+    let components = trimmed.split(separator: " ", maxSplits: 1).map { String($0) }
+
+    if components.count == 2, let baseAmount = Double(components[0]) {
+        let unit = components[1]
+        let total = baseAmount * Double(quantity)
+        
+        // Format hasil agar tidak muncul ".0" jika angka bulat
+        let formattedTotal: String
+        if total.truncatingRemainder(dividingBy: 1) == 0 {
+            formattedTotal = String(Int(total)) // misalnya "3" bukan "3.0"
+        } else {
+            formattedTotal = String(format: "%.1f", total) // misalnya "2.5"
+        }
+
+        return "\(formattedTotal) \(unit)"
+    } else {
+        // Gagal parsing → kembalikan original
+        return portion
+    }
+}
+
+
+
 struct ListView: View {
     
     @State private var showConfirm = false
@@ -34,8 +59,8 @@ struct ListView: View {
                             MakananItemView(
                                 imageName: food.imageName,
                                 title: food.name,
-                                calories: "\(food.calories) kkal",
-                                portion: food.portion,
+                                calories: "\(food.calories * qty ) kkal",
+                                portion: portionMultiplied(portion: food.portion, quantity: qty),
                                 quantity: qty,
                                 onMinus: {
                                     if qty > 1 {

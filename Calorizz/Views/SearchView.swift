@@ -38,6 +38,8 @@ struct SearchView: View {
                                 HStack {
                                     TextField("Cari Menu", text: $searchBar)
                                         .foregroundColor(.gray)
+                                        .textInputAutocapitalization(.never)
+                                        .autocorrectionDisabled(true)
                                     
                                     Button {
                                         if !searchBar.isEmpty {
