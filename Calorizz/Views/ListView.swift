@@ -153,7 +153,7 @@ struct MakananItemView: View {
                     .font(.subheadline)
                 
                 Text(portion)
-                    .foregroundStyle(.green)
+                    .foregroundStyle(.shadedGreen)
                     .font(.subheadline)
                 
             }
