@@ -11,8 +11,8 @@ import SwiftUI
 struct CalorizzApp: App {
     let persistenceController = PersistenceController.shared
     @State private var selectedFoods: [FoodItem] = []
-
-
+    
+    
     var body: some Scene {
         
         WindowGroup {
@@ -20,4 +20,11 @@ struct CalorizzApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
+    
+    init() {
+        
+        UIBarButtonItem.appearance().tintColor = UIColor.black
+        
+    }
+    
 }
