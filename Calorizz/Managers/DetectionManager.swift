@@ -13,7 +13,7 @@ class DetectionManager {
     static let shared = DetectionManager()
 
     private let visionModel: VNCoreMLModel?
-    private let model: FoodDetect1?
+    private let model: FoodDetect2?
 
     /// Label diambil langsung dari metadata model
     private lazy var labels: [String] = {
@@ -29,7 +29,7 @@ class DetectionManager {
     }()
 
     private init() {
-        if let model = try? FoodDetect1(configuration: MLModelConfiguration()) {
+        if let model = try? FoodDetect2(configuration: MLModelConfiguration()) {
             self.model = model
             self.visionModel = try? VNCoreMLModel(for: model.model)
         } else {
