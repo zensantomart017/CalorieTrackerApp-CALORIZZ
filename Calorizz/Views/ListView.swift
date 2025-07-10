@@ -1,5 +1,5 @@
 //
-//  listView.swift
+//  ListView.swift
 //  calories
 //
 //  Created by Foundation-019 on 25/06/25.
@@ -9,28 +9,27 @@ import SwiftUI
 
 struct ListView: View {
     
-    @State private var quantities: [UUID: Int] = [:]
     @State private var showConfirm = false
     @State private var pendingDelete: FoodItem?
     @ObservedObject var selectionModel: FoodSelectionModel
     
     var totalCalories: Int {
         selectionModel.selectedFoods.reduce(0) { sum, food in
-            let qty = quantities[food.id] ?? 0
+            let qty = selectionModel.quantities[food.id] ?? 0
             return sum + food.calories * qty
         }
     }
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.gradasi1, .gradasi2, .gradasi3,.gradasi3, .gradasi4,.gradasi4], startPoint: .topTrailing, endPoint: .bottomLeading)
+            LinearGradient(colors: [.gradasi1, .gradasi2, .gradasi3, .gradasi3, .gradasi4, .gradasi4], startPoint: .topTrailing, endPoint: .bottomLeading)
                 .ignoresSafeArea()
             
-            VStack{
+            VStack {
                 ScrollView {
                     VStack(alignment: .trailing, spacing: 10) {
                         ForEach(selectionModel.selectedFoods) { food in
-                            let qty = quantities[food.id] ?? 1
+                            let qty = selectionModel.quantities[food.id] ?? 1
                             
                             MakananItemView(
                                 imageName: food.imageName,
@@ -40,14 +39,14 @@ struct ListView: View {
                                 quantity: qty,
                                 onMinus: {
                                     if qty > 1 {
-                                        quantities[food.id, default: 1] -= 1
+                                        selectionModel.quantities[food.id, default: 1] -= 1
                                     } else {
                                         pendingDelete = food
                                         showConfirm = true
                                     }
                                 },
                                 onPlus: {
-                                    quantities[food.id, default: 1] += 1
+                                    selectionModel.quantities[food.id, default: 1] += 1
                                 }
                             )
                         }
@@ -64,13 +63,13 @@ struct ListView: View {
                     Text("\(totalCalories) kkal")
                         .font(.title2.bold())
                         .foregroundColor(.shadedGreen)
+                    
                     Spacer()
                 }
                 .padding()
                 .background(Color.white.opacity(0.1))
                 .cornerRadius(12)
                 .padding(.horizontal)
-                
             }
             .navigationTitle("Daftar Makanan")
             .toolbar {
@@ -82,7 +81,6 @@ struct ListView: View {
                     }
                 }
             }
-            
             .alert("Hapus item?", isPresented: $showConfirm) {
                 Button("Ya", role: .destructive) {
                     if let food = pendingDelete {
@@ -95,20 +93,18 @@ struct ListView: View {
                     Text("Apakah yakin ingin menghapus \"\(food.name)\" dari list makanan?")
                 }
             }
-            
             .onAppear {
                 for food in selectionModel.selectedFoods {
-                    if quantities[food.id] == nil {
-                        quantities[food.id] = 1
+                    if selectionModel.quantities[food.id] == nil {
+                        selectionModel.quantities[food.id] = 1
                     }
                 }
             }
-            
         }
     }
     
     func delete(_ food: FoodItem) {
-        quantities.removeValue(forKey: food.id)
+        selectionModel.quantities.removeValue(forKey: food.id)
         // Untuk menghapus dari list, karena selectedFoods bersifat let,
         // kita harus mengubahnya jadi @State dulu. Jadi:
         // Ubah var selectedFoods → @State var selectedFoods

@@ -1,5 +1,5 @@
 //
-//  WelcomeView.swift
+//  CategoryView.swift
 //  Calorizz
 //
 //  Created by Foundation-023 on 09/07/25.
@@ -57,10 +57,6 @@ func foodCardView(food: FoodItem, isAdded: Bool, onAdd: @escaping () -> Void) ->
             .stroke(Color.gray.opacity(0.2), lineWidth: 0.5)
     )
     .padding(.horizontal, 20)
-}
-
-class FoodSelectionModel: ObservableObject {
-    @Published var selectedFoods: [FoodItem] = []
 }
 
 struct CategoryView: View {
