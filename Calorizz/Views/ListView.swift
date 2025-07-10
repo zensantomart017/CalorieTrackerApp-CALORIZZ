@@ -75,7 +75,7 @@ struct ListView: View {
             .navigationTitle("Daftar Makanan")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(destination: CategoryView(selectionModel: selectionModel)) {
+                    NavigationLink(destination: CategoryView(selectionModel: FoodSelectionModel())) {
                         Text("Selesai")
                             .foregroundStyle(.blue)
                             .font(.title3)
