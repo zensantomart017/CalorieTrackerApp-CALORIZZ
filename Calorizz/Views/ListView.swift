@@ -128,12 +128,20 @@ struct MakananItemView: View {
     
     var body: some View {
         HStack (spacing: 20) {
-            Image(imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 70, height: 70)
-                .clipped()
-                .cornerRadius(12)
+            if let uiImage = UIImage(named: imageName) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 70, height: 70)
+                    .clipped()
+                    .cornerRadius(12)
+            } else {
+                Image(systemName: "fork.knife.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 70, height: 70)
+                    .foregroundColor(.gray)
+            }
             
             
             VStack(alignment: .leading, spacing: 4) {
