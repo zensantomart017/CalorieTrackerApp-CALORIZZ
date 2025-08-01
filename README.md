@@ -34,7 +34,7 @@ Its core features include:
 ## App Preview
 
 <p align="center">
-  <img src="images/calorizz_page.jpg" width="350" />
+  <img src="images/calorizz_page.jpg" width="400" />
 </p>
 
 ---
