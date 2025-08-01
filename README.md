@@ -1,7 +1,7 @@
 <h1 align="center">CALORIETRACKERAPP – CALORIZZ</h1>
 
 <p align="center">
-  <em>Transforming Ideas Into Limitless Possibilities Daily</em>
+  <em>Know Your Daily Calories With Calorizz</em>
 </p>
 
 <p align="center">
@@ -34,7 +34,7 @@ Its core features include:
 ## App Preview
 
 <p align="center">
-  <img src="images/calorizz_page.jpg" width="230" />
+  <img src="images/calorizz_page.jpg" width="350" />
 </p>
 
 ---
