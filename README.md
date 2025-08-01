@@ -65,6 +65,6 @@ Its core features include:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/username/Calorizz.git
+git clone https://github.com/zensantomart017/CalorieTrackerApp-CALORIZZ.git
 
 
